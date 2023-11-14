@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Register</title>
+    </head>
+    <body>
+        <div id="app">
+            <form id="form-registration">
+                <label for="form-registration-input-username">Username:</label
+                ><br />
+                <input
+                    type="text"
+                    id="form-registration-input-username"
+                    name="username"
+                /><br />
+                <label for="form-registration-input-email">Email:</label><br />
+                <input
+                    type="text"
+                    id="form-registration-input-email"
+                    name="email"
+                /><br />
+                <label for="form-registration-input-password">Password:</label
+                ><br />
+                <input
+                    type="password"
+                    id="form-registration-input-password"
+                    name="password"
+                /><br />
+                <button id="form-registration-button-register" name="register">
+                    Register
+                </button>
+            </form>
+            <div id="response-message"></div>
+        </div>
+        <script src="../dist/registerUser.bundle.js"></script>
+    </body>
+</html>

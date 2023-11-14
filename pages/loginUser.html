@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Login</title>
+    </head>
+    <body>
+        <div id="app">
+            <form id="form-login">
+                <label for="form-login-input-identifier">Username:</label><br />
+                <input
+                    type="text"
+                    id="form-login-input-identifier"
+                    name="identifier"
+                /><br />
+                <label for="form-login-input-password">Password:</label><br />
+                <input
+                    type="password"
+                    id="form-login-input-password"
+                    name="password"
+                /><br />
+                <button id="form-login-button-login" name="login">Login</button>
+            </form>
+            <div id="response-message"></div>
+        </div>
+        <script src="../dist/loginUser.bundle.js"></script>
+    </body>
+</html>
