@@ -1,0 +1,76 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2023 Kawtious
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+const path = require('path');
+const Dotenv = require('dotenv-webpack');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+
+const config = [
+    {
+        site: 'index'
+    },
+    {
+        site: 'registerUser'
+    },
+    {
+        site: 'loginUser'
+    }
+];
+
+const entryHtmlPlugins = config.map(({ site }) => {
+    return new HtmlWebPackPlugin({
+        filename: `${site}.html`,
+        chunks: [site]
+    });
+});
+
+module.exports = {
+    entry: {
+        authChecker: './src/utils/AuthChecker.util.ts',
+        index: './src/views/Index.view.ts',
+        registerUser: './src/views/RegisterUser.view.ts',
+        loginUser: './src/views/LoginUser.view.ts'
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(ts|js)?$/,
+                exclude: /node_modules/,
+                use: 'ts-loader'
+            }
+        ]
+    },
+    resolve: {
+        extensions: ['.ts', '.js']
+    },
+    output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    plugins: [new Dotenv(), ...entryHtmlPlugins],
+    devServer: {
+        static: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 4000
+    }
+};
