@@ -24,6 +24,7 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 const config = [
     {
@@ -34,6 +35,15 @@ const config = [
     },
     {
         site: 'loginUser'
+    },
+    {
+        site: 'insertCareer'
+    },
+    {
+        site: 'updateCareer'
+    },
+    {
+        site: 'deleteCareer'
     }
 ];
 
@@ -46,10 +56,13 @@ const entryHtmlPlugins = config.map(({ site }) => {
 
 module.exports = {
     entry: {
-        authChecker: './src/utils/AuthChecker.util.ts',
+        authChecker: './src/plugins/AuthChecker.plugin.ts',
         index: './src/views/Index.view.ts',
-        registerUser: './src/views/RegisterUser.view.ts',
-        loginUser: './src/views/LoginUser.view.ts'
+        registerUser: './src/views/auth/RegisterUser.view.ts',
+        loginUser: './src/views/auth/LoginUser.view.ts',
+        insertCareer: './src/views/careers/InsertCareer.view.ts',
+        updateCareer: './src/views/careers/UpdateCareer.view.ts',
+        deleteCareer: './src/views/careers/DeleteCareer.view.ts'
     },
     module: {
         rules: [
@@ -67,7 +80,14 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
-    plugins: [new Dotenv(), ...entryHtmlPlugins],
+    plugins: [
+        new Dotenv(),
+        ...entryHtmlPlugins,
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        })
+    ],
     devServer: {
         static: path.join(__dirname, 'dist'),
         compress: true,

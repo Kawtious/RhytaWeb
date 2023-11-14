@@ -21,14 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import $ from 'jquery';
+import { CareerRequest } from '../../requests/Career.request';
 
-import { validateTokenCookie } from './JwtAuth.util';
+const careerRequest = new CareerRequest();
+
+export async function deleteCareer(id: number) {
+    return await careerRequest.delete(id);
+}
 
 $(async () => {
-    const isTokenCookieValid = await validateTokenCookie();
+    $('#form-career-delete-button-delete').on('click', function (e) {
+        e.preventDefault();
 
-    if (!isTokenCookieValid) {
-        window.location.replace('loginUser.html');
-    }
+        const id = $('#form-career-delete-input-id').val() as string;
+
+        deleteCareer(parseInt(id))
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
 });

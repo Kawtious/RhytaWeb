@@ -21,9 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-$(async () => {
-    const app = document.getElementById('app');
-    const p = document.createElement('p');
-    p.textContent = 'Hello, World!';
-    app?.appendChild(p);
-});
+import Cookies from 'js-cookie';
+
+import { axiosInstance } from '../../configuration/Axios.configuration';
+import { UserRequest } from '../../requests/User.request';
+
+const userRequest = new UserRequest();
+
+export async function resetTokenCookie() {
+    Cookies.remove('jwt-auth-token');
+}
+
+export async function authenticate(token: string): Promise<boolean> {
+    Cookies.set('jwt-auth-token', token);
+
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    return userRequest
+        .getFromAuthHeader()
+        .then(() => {
+            return true;
+        })
+        .catch(() => {
+            return false;
+        });
+}

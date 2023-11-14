@@ -21,38 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import $ from 'jquery';
-
-import { RegisterUserDto } from '../dto/RegisterUser.dto';
-import { AuthRequest } from '../requests/Auth.request';
+import { LoginRequestDto } from '../../dto/LoginRequest.dto';
+import { AuthRequest } from '../../requests/Auth.request';
+import { authenticate } from '../../utils/cookies/JwtAuth.util';
 
 const authRequest = new AuthRequest();
 
-export async function registerUser(
-    username: string,
-    email: string,
-    password: string
-) {
+export async function loginUser(identifier: string, password: string) {
     const registerUserDto = {
-        username: username,
-        email: email,
+        identifier: identifier,
         password: password
-    } as RegisterUserDto;
+    } as LoginRequestDto;
 
-    return await authRequest.register(registerUserDto);
+    return await authRequest.login(registerUserDto);
 }
 
 $(async () => {
-    $('#form-registration-button-register').on('click', function (e) {
+    $('#form-login-button-login').on('click', function (e) {
         e.preventDefault();
 
-        const username = $('#form-registration-input-username').val() as string;
-        const email = $('#form-registration-input-email').val() as string;
-        const password = $('#form-registration-input-password').val() as string;
+        const identifier = $('#form-login-input-identifier').val() as string;
+        const password = $('#form-login-input-password').val() as string;
 
-        registerUser(username, email, password)
+        loginUser(identifier, password)
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
+                return authenticate(result.data.accessToken);
             })
             .catch((error) => {
                 $('#response-message').text(JSON.stringify(error.response));

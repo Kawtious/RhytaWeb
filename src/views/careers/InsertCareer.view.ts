@@ -21,26 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import Cookies from 'js-cookie';
+import { CareerDto } from '../../dto/Career.dto';
+import { CareerRequest } from '../../requests/Career.request';
 
-import { UserRequest } from '../requests/User.request';
+const careerRequest = new CareerRequest();
 
-const userRequest = new UserRequest();
+export async function insertCareer(name: string, description: string) {
+    const careerDto = {
+        name: name,
+        description: description
+    } as CareerDto;
 
-export async function setTokenCookie(authToken: string) {
-    Cookies.set('jwt-auth-token', authToken);
+    return await careerRequest.insert(careerDto);
 }
 
-export async function resetTokenCookie() {
-    Cookies.remove('jwt-auth-token');
-}
+$(async () => {
+    $('#form-career-insert-button-insert').on('click', function (e) {
+        e.preventDefault();
 
-export async function validateTokenCookie(): Promise<boolean> {
-    const token = Cookies.get('jwt-auth-token');
+        const name = $('#form-career-insert-input-name').val() as string;
+        const description = $(
+            '#form-career-insert-input-description'
+        ).val() as string;
 
-    if (!token) {
-        return false;
-    }
-
-    return Boolean(await userRequest.validate());
-}
+        insertCareer(name, description)
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
+});

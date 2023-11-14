@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Insert Career</title>
+        <script src="../../dist/authChecker.bundle.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <form id="form-career-update">
+                <label for="form-career-update-input-id">Id:</label><br />
+                <input
+                    type="text"
+                    id="form-career-update-input-id"
+                    name="id"
+                /><br />
+                <label for="form-career-update-input-version">Version:</label
+                ><br />
+                <input
+                    type="text"
+                    id="form-career-update-input-version"
+                    name="version"
+                /><br />
+                <label for="form-career-update-input-name">Name:</label><br />
+                <input
+                    type="text"
+                    id="form-career-update-input-name"
+                    name="name"
+                /><br />
+                <label for="form-career-update-input-description"
+                    >Description:</label
+                ><br />
+                <input
+                    type="text"
+                    id="form-career-update-input-description"
+                    name="description"
+                /><br />
+                <button id="form-career-update-button-insert" name="update">
+                    Update
+                </button>
+            </form>
+            <div id="response-message"></div>
+        </div>
+        <script src="../../dist/updateCareer.bundle.js"></script>
+    </body>
+</html>

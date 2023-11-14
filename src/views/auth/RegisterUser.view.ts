@@ -21,9 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import { RegisterUserDto } from '../../dto/RegisterUser.dto';
+import { AuthRequest } from '../../requests/Auth.request';
+
+const authRequest = new AuthRequest();
+
+export async function registerUser(
+    username: string,
+    email: string,
+    password: string
+) {
+    const registerUserDto = {
+        username: username,
+        email: email,
+        password: password
+    } as RegisterUserDto;
+
+    return await authRequest.register(registerUserDto);
+}
+
 $(async () => {
-    const app = document.getElementById('app');
-    const p = document.createElement('p');
-    p.textContent = 'Hello, World!';
-    app?.appendChild(p);
+    $('#form-registration-button-register').on('click', function (e) {
+        e.preventDefault();
+
+        const username = $('#form-registration-input-username').val() as string;
+        const email = $('#form-registration-input-email').val() as string;
+        const password = $('#form-registration-input-password').val() as string;
+
+        registerUser(username, email, password)
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
 });

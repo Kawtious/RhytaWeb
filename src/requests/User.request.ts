@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 import { axiosInstance } from '../configuration/Axios.configuration';
+import { User } from '../entities/User.entity';
 
 export class UserRequest {
     private readonly userEndpoint: string;
@@ -30,9 +31,7 @@ export class UserRequest {
         this.userEndpoint = 'users';
     }
 
-    async validate() {
-        return await axiosInstance.get<boolean>(
-            `/${this.userEndpoint}/validate`
-        );
+    async getFromAuthHeader() {
+        return await axiosInstance.get<User>(`/${this.userEndpoint}`);
     }
 }

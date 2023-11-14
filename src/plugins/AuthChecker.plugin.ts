@@ -21,9 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import $ from 'jquery';
+import Cookies from 'js-cookie';
+
+import { authenticate } from '../utils/cookies/JwtAuth.util';
+
+const loginRedirect = '/RhytaWeb/pages/auth/loginUser.html';
+
 $(async () => {
-    const app = document.getElementById('app');
-    const p = document.createElement('p');
-    p.textContent = 'Hello, World!';
-    app?.appendChild(p);
+    const token = Cookies.get('jwt-auth-token');
+
+    if (!token) {
+        window.location.replace(loginRedirect);
+        return;
+    }
+
+    authenticate(token)
+        .then((result) => {
+            if (!result) {
+                window.location.replace(loginRedirect);
+            }
+        })
+        .catch(() => {
+            window.location.replace(loginRedirect);
+        });
 });

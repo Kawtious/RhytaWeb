@@ -21,34 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import $ from 'jquery';
+import { CareerDto } from '../../dto/Career.dto';
+import { CareerRequest } from '../../requests/Career.request';
 
-import { LoginRequestDto } from '../dto/LoginRequest.dto';
-import { AuthRequest } from '../requests/Auth.request';
-import { setTokenCookie } from '../utils/JwtAuth.util';
+const careerRequest = new CareerRequest();
 
-const authRequest = new AuthRequest();
+export async function updateCareer(
+    id: number,
+    version: number,
+    name: string,
+    description: string
+) {
+    const careerDto = {
+        version: version,
+        name: name,
+        description: description
+    } as CareerDto;
 
-export async function loginUser(identifier: string, password: string) {
-    const registerUserDto = {
-        identifier: identifier,
-        password: password
-    } as LoginRequestDto;
-
-    return await authRequest.login(registerUserDto);
+    return await careerRequest.update(id, careerDto);
 }
 
 $(async () => {
-    $('#form-login-button-login').on('click', function (e) {
+    $('#form-career-insert-button-insert').on('click', function (e) {
         e.preventDefault();
 
-        const identifier = $('#form-login-input-identifier').val() as string;
-        const password = $('#form-login-input-password').val() as string;
+        const id = $('#form-career-update-input-id').val() as string;
+        const version = $('#form-career-update-input-version').val() as string;
+        const name = $('#form-career-update-input-name').val() as string;
+        const description = $(
+            '#form-career-update-input-description'
+        ).val() as string;
 
-        loginUser(identifier, password)
+        updateCareer(parseInt(id), parseInt(version), name, description)
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
-                return setTokenCookie(result.data.accessToken);
             })
             .catch((error) => {
                 $('#response-message').text(JSON.stringify(error.response));

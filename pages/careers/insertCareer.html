@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Insert Career</title>
+        <script src="../../dist/authChecker.bundle.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <form id="form-career-insert">
+                <label for="form-career-insert-input-name">Name:</label><br />
+                <input
+                    type="text"
+                    id="form-career-insert-input-name"
+                    name="name"
+                /><br />
+                <label for="form-career-insert-input-description"
+                    >Description:</label
+                ><br />
+                <input
+                    type="text"
+                    id="form-career-insert-input-description"
+                    name="description"
+                /><br />
+                <button id="form-career-insert-button-insert" name="insert">
+                    Insert
+                </button>
+            </form>
+            <div id="response-message"></div>
+        </div>
+        <script src="../../dist/insertCareer.bundle.js"></script>
+    </body>
+</html>
