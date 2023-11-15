@@ -23,40 +23,12 @@
  */
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-
-const config = [
-    {
-        site: 'index'
-    },
-    {
-        site: 'registerUser'
-    },
-    {
-        site: 'loginUser'
-    },
-    {
-        site: 'insertCareer'
-    },
-    {
-        site: 'updateCareer'
-    },
-    {
-        site: 'deleteCareer'
-    }
-];
-
-const entryHtmlPlugins = config.map(({ site }) => {
-    return new HtmlWebPackPlugin({
-        filename: `${site}.html`,
-        chunks: [site]
-    });
-});
 
 module.exports = {
     entry: {
         authChecker: './src/plugins/AuthChecker.plugin.ts',
+        logoutOnLoad: './src/plugins/LogoutOnLoad.plugin.ts',
         index: './src/views/Index.view.ts',
         registerUser: './src/views/auth/RegisterUser.view.ts',
         loginUser: './src/views/auth/LoginUser.view.ts',
@@ -82,7 +54,6 @@ module.exports = {
     },
     plugins: [
         new Dotenv(),
-        ...entryHtmlPlugins,
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
