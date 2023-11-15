@@ -27,7 +27,7 @@ import { authenticate } from '../../utils/cookies/JwtAuth.util';
 
 const authRequest = new AuthRequest();
 
-export async function loginUser(identifier: string, password: string) {
+async function loginUser(identifier: string, password: string) {
     const registerUserDto = {
         identifier: identifier,
         password: password

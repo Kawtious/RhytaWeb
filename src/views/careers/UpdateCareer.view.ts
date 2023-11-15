@@ -26,7 +26,7 @@ import { CareerRequest } from '../../requests/Career.request';
 
 const careerRequest = new CareerRequest();
 
-export async function updateCareer(
+async function updateCareer(
     id: number,
     version: number,
     name: string,

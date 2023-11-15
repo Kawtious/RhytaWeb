@@ -25,7 +25,7 @@ import { CareerRequest } from '../../requests/Career.request';
 
 const careerRequest = new CareerRequest();
 
-export async function deleteCareer(id: number) {
+async function deleteCareer(id: number) {
     return await careerRequest.delete(id);
 }
 

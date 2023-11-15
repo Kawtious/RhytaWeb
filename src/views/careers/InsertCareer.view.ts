@@ -26,7 +26,7 @@ import { CareerRequest } from '../../requests/Career.request';
 
 const careerRequest = new CareerRequest();
 
-export async function insertCareer(name: string, description: string) {
+async function insertCareer(name: string, description: string) {
     const careerDto = {
         name: name,
         description: description

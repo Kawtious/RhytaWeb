@@ -26,11 +26,7 @@ import { AuthRequest } from '../../requests/Auth.request';
 
 const authRequest = new AuthRequest();
 
-export async function registerUser(
-    username: string,
-    email: string,
-    password: string
-) {
+async function registerUser(username: string, email: string, password: string) {
     const registerUserDto = {
         username: username,
         email: email,
