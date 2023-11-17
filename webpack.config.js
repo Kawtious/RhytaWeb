@@ -27,7 +27,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        authChecker: './src/plugins/AuthChecker.plugin.ts',
+        authCheckOnLoad: './src/plugins/AuthCheckOnLoad.plugin.ts',
         logoutOnLoad: './src/plugins/LogoutOnLoad.plugin.ts',
         index: './src/views/Index.view.ts',
         registerUser: './src/views/auth/RegisterUser.view.ts',
