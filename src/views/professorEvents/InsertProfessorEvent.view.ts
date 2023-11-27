@@ -21,30 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { CareerDto } from '../../dto/Career.dto';
-import { CareerRequest } from '../../requests/Career.request';
+import { ProfessorEventDto } from '../../dto/ProfessorEvent.dto';
+import { ProfessorEventRequest } from '../../requests/ProfessorEvent.request';
 
-const careerRequest = new CareerRequest();
+const professorEventRequest = new ProfessorEventRequest();
 
 $(async () => {
-    $('#form-career-update-button-update').on('click', function (e) {
+    $('#form-professor-event-insert-button-insert').on('click', function (e) {
         e.preventDefault();
 
-        const id = $('#form-career-update-input-id').val() as string;
-        const version = $('#form-career-update-input-version').val() as string;
-        const name = $('#form-career-update-input-name').val() as string;
+        const professorId = $(
+            '#form-professor-event-insert-input-professor-id'
+        ).val() as string;
+        const title = $(
+            '#form-professor-event-insert-input-title'
+        ).val() as string;
         const description = $(
-            '#form-career-update-input-description'
+            '#form-professor-event-insert-input-description'
+        ).val() as string;
+        const startDate = $(
+            '#form-professor-event-insert-input-start-date'
+        ).val() as string;
+        const endDate = $(
+            '#form-professor-event-insert-input-end-date'
         ).val() as string;
 
-        const careerDto: CareerDto = {
-            version: parseInt(version),
-            name: name,
-            description: description
+        const professorEventDto: ProfessorEventDto = {
+            title: title,
+            description: description,
+            startDate: new Date(startDate),
+            endDate: new Date(endDate)
         };
 
-        careerRequest
-            .update(parseInt(id), careerDto)
+        professorEventRequest
+            .insert(parseInt(professorId), professorEventDto)
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
             })

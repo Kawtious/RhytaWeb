@@ -21,30 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { CareerDto } from '../../dto/Career.dto';
-import { CareerRequest } from '../../requests/Career.request';
+import { ProfessorDto } from '../../dto/Professor.dto';
+import { ProfessorRequest } from '../../requests/Professor.request';
 
-const careerRequest = new CareerRequest();
+const professorRequest = new ProfessorRequest();
 
 $(async () => {
-    $('#form-career-update-button-update').on('click', function (e) {
+    $('#form-professor-insert-button-insert').on('click', function (e) {
         e.preventDefault();
 
-        const id = $('#form-career-update-input-id').val() as string;
-        const version = $('#form-career-update-input-version').val() as string;
-        const name = $('#form-career-update-input-name').val() as string;
-        const description = $(
-            '#form-career-update-input-description'
+        const firstName = $(
+            '#form-professor-insert-input-first-name'
+        ).val() as string;
+        const lastName = $(
+            '#form-professor-insert-input-last-name'
         ).val() as string;
 
-        const careerDto: CareerDto = {
-            version: parseInt(version),
-            name: name,
-            description: description
+        const professorDto: ProfessorDto = {
+            firstName: firstName,
+            lastName: lastName
         };
 
-        careerRequest
-            .update(parseInt(id), careerDto)
+        professorRequest
+            .insert(professorDto)
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
             })

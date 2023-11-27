@@ -21,30 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { CareerDto } from '../../dto/Career.dto';
-import { CareerRequest } from '../../requests/Career.request';
+import { ProfessorDto } from '../../dto/Professor.dto';
+import { ProfessorRequest } from '../../requests/Professor.request';
 
-const careerRequest = new CareerRequest();
+const professorRequest = new ProfessorRequest();
 
 $(async () => {
-    $('#form-career-update-button-update').on('click', function (e) {
+    $('#form-course-update-button-update').on('click', function (e) {
         e.preventDefault();
 
-        const id = $('#form-career-update-input-id').val() as string;
-        const version = $('#form-career-update-input-version').val() as string;
-        const name = $('#form-career-update-input-name').val() as string;
-        const description = $(
-            '#form-career-update-input-description'
+        const id = $('#form-course-update-input-id').val() as string;
+        const version = $('#form-course-update-input-version').val() as string;
+        const firstName = $(
+            '#form-professor-update-input-first-name'
+        ).val() as string;
+        const lastName = $(
+            '#form-professor-update-input-last-name'
         ).val() as string;
 
-        const careerDto: CareerDto = {
+        const professorDto: ProfessorDto = {
             version: parseInt(version),
-            name: name,
-            description: description
+            firstName: firstName,
+            lastName: lastName
         };
 
-        careerRequest
-            .update(parseInt(id), careerDto)
+        professorRequest
+            .update(parseInt(id), professorDto)
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
             })

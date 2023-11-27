@@ -21,30 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { CareerDto } from '../../dto/Career.dto';
-import { CareerRequest } from '../../requests/Career.request';
+import { ProfessorEventRequest } from '../../requests/ProfessorEvent.request';
 
-const careerRequest = new CareerRequest();
+const professorEventRequest = new ProfessorEventRequest();
 
 $(async () => {
-    $('#form-career-update-button-update').on('click', function (e) {
+    $('#form-professor-event-delete-button-delete').on('click', function (e) {
         e.preventDefault();
 
-        const id = $('#form-career-update-input-id').val() as string;
-        const version = $('#form-career-update-input-version').val() as string;
-        const name = $('#form-career-update-input-name').val() as string;
-        const description = $(
-            '#form-career-update-input-description'
+        const professorId = $(
+            '#form-professor-event-delete-input-professor-id'
         ).val() as string;
+        const id = $('#form-professor-event-delete-input-id').val() as string;
 
-        const careerDto: CareerDto = {
-            version: parseInt(version),
-            name: name,
-            description: description
-        };
-
-        careerRequest
-            .update(parseInt(id), careerDto)
+        professorEventRequest
+            .delete(parseInt(professorId), parseInt(id))
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
             })

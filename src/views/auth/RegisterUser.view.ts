@@ -26,16 +26,6 @@ import { AuthRequest } from '../../requests/Auth.request';
 
 const authRequest = new AuthRequest();
 
-async function registerUser(username: string, email: string, password: string) {
-    const registerUserDto = {
-        username: username,
-        email: email,
-        password: password
-    } as RegisterUserDto;
-
-    return await authRequest.register(registerUserDto);
-}
-
 $(async () => {
     $('#form-registration-button-register').on('click', function (e) {
         e.preventDefault();
@@ -44,7 +34,14 @@ $(async () => {
         const email = $('#form-registration-input-email').val() as string;
         const password = $('#form-registration-input-password').val() as string;
 
-        registerUser(username, email, password)
+        const registerUserDto: RegisterUserDto = {
+            username: username,
+            email: email,
+            password: password
+        };
+
+        authRequest
+            .register(registerUserDto)
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
             })

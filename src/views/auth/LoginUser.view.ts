@@ -27,15 +27,6 @@ import { authenticate } from '../../utils/cookies/JwtAuth.util';
 
 const authRequest = new AuthRequest();
 
-async function loginUser(identifier: string, password: string) {
-    const registerUserDto = {
-        identifier: identifier,
-        password: password
-    } as LoginRequestDto;
-
-    return await authRequest.login(registerUserDto);
-}
-
 $(async () => {
     $('#form-login-button-login').on('click', function (e) {
         e.preventDefault();
@@ -43,7 +34,13 @@ $(async () => {
         const identifier = $('#form-login-input-identifier').val() as string;
         const password = $('#form-login-input-password').val() as string;
 
-        loginUser(identifier, password)
+        const registerUserDto: LoginRequestDto = {
+            identifier: identifier,
+            password: password
+        };
+
+        authRequest
+            .login(registerUserDto)
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
                 return authenticate(result.data.accessToken);

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Update Term</title>
+        <script src="../../dist/authCheckOnLoad.bundle.js"></script>
+        <script defer src="../../dist/updateTerm.bundle.js"></script>
+    </head>
+    <body>
+        <header></header>
+        <section>
+            <form id="form-term-update">
+                <label for="form-term-update-input-id">Id:</label><br />
+                <input
+                    type="text"
+                    id="form-term-update-input-id"
+                    name="id"
+                /><br />
+                <label for="form-term-update-input-version">Version:</label
+                ><br />
+                <input
+                    type="text"
+                    id="form-term-update-input-version"
+                    name="version"
+                /><br />
+                <label for="form-term-update-input-title">Title:</label><br />
+                <input
+                    type="text"
+                    id="form-term-update-input-title"
+                    name="title"
+                /><br />
+                <label for="form-term-update-input-description"
+                    >Description:</label
+                ><br />
+                <input
+                    type="text"
+                    id="form-term-update-input-description"
+                    name="description"
+                /><br />
+                <label for="form-term-update-input-start-date"
+                    >Start Date:</label
+                ><br />
+                <input
+                    type="datetime-local"
+                    id="form-term-update-input-start-date"
+                    name="start-date"
+                /><br />
+                <label for="form-term-update-input-end-date">End Date:</label
+                ><br />
+                <input
+                    type="datetime-local"
+                    id="form-term-update-input-end-date"
+                    name="end-date"
+                /><br />
+                <button id="form-term-update-button-update" name="update">
+                    Update
+                </button>
+            </form>
+            <p id="response-message"></p>
+        </section>
+        <footer></footer>
+    </body>
+</html>

@@ -26,15 +26,6 @@ import { CareerRequest } from '../../requests/Career.request';
 
 const careerRequest = new CareerRequest();
 
-async function insertCareer(name: string, description: string) {
-    const careerDto = {
-        name: name,
-        description: description
-    } as CareerDto;
-
-    return await careerRequest.insert(careerDto);
-}
-
 $(async () => {
     $('#form-career-insert-button-insert').on('click', function (e) {
         e.preventDefault();
@@ -44,7 +35,13 @@ $(async () => {
             '#form-career-insert-input-description'
         ).val() as string;
 
-        insertCareer(name, description)
+        const careerDto: CareerDto = {
+            name: name,
+            description: description
+        };
+
+        careerRequest
+            .insert(careerDto)
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
             })

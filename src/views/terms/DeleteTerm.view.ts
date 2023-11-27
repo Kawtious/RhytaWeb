@@ -21,30 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { CareerDto } from '../../dto/Career.dto';
-import { CareerRequest } from '../../requests/Career.request';
+import { TermRequest } from '../../requests/Term.request';
 
-const careerRequest = new CareerRequest();
+const termRequest = new TermRequest();
 
 $(async () => {
-    $('#form-career-update-button-update').on('click', function (e) {
+    $('#form-term-delete-button-delete').on('click', function (e) {
         e.preventDefault();
 
-        const id = $('#form-career-update-input-id').val() as string;
-        const version = $('#form-career-update-input-version').val() as string;
-        const name = $('#form-career-update-input-name').val() as string;
-        const description = $(
-            '#form-career-update-input-description'
-        ).val() as string;
+        const id = $('#form-term-delete-input-id').val() as string;
 
-        const careerDto: CareerDto = {
-            version: parseInt(version),
-            name: name,
-            description: description
-        };
-
-        careerRequest
-            .update(parseInt(id), careerDto)
+        termRequest
+            .delete(parseInt(id))
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
             })

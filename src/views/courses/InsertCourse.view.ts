@@ -21,30 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { CareerDto } from '../../dto/Career.dto';
-import { CareerRequest } from '../../requests/Career.request';
+import { CourseDto } from '../../dto/Course.dto';
+import { CourseRequest } from '../../requests/Course.request';
 
-const careerRequest = new CareerRequest();
+const courseRequest = new CourseRequest();
 
 $(async () => {
-    $('#form-career-update-button-update').on('click', function (e) {
+    $('#form-course-insert-button-insert').on('click', function (e) {
         e.preventDefault();
 
-        const id = $('#form-career-update-input-id').val() as string;
-        const version = $('#form-career-update-input-version').val() as string;
-        const name = $('#form-career-update-input-name').val() as string;
+        const name = $('#form-course-insert-input-name').val() as string;
         const description = $(
-            '#form-career-update-input-description'
+            '#form-course-insert-input-description'
+        ).val() as string;
+        const careerId = $(
+            '#form-course-insert-input-career-id'
         ).val() as string;
 
-        const careerDto: CareerDto = {
-            version: parseInt(version),
+        const courseDto: CourseDto = {
             name: name,
-            description: description
+            description: description,
+            careerId: parseInt(careerId)
         };
 
-        careerRequest
-            .update(parseInt(id), careerDto)
+        courseRequest
+            .insert(courseDto)
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
             })

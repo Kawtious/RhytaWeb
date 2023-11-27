@@ -34,7 +34,22 @@ module.exports = {
         loginUser: './src/views/auth/LoginUser.view.ts',
         insertCareer: './src/views/careers/InsertCareer.view.ts',
         updateCareer: './src/views/careers/UpdateCareer.view.ts',
-        deleteCareer: './src/views/careers/DeleteCareer.view.ts'
+        deleteCareer: './src/views/careers/DeleteCareer.view.ts',
+        insertCourse: './src/views/courses/InsertCourse.view.ts',
+        updateCourse: './src/views/courses/UpdateCourse.view.ts',
+        deleteCourse: './src/views/courses/DeleteCourse.view.ts',
+        insertProfessor: './src/views/professors/InsertProfessor.view.ts',
+        updateProfessor: './src/views/professors/UpdateProfessor.view.ts',
+        deleteProfessor: './src/views/professors/DeleteProfessor.view.ts',
+        insertProfessorEvent:
+            './src/views/professorEvents/InsertProfessorEvent.view.ts',
+        updateProfessorEvent:
+            './src/views/professorEvents/UpdateProfessorEvent.view.ts',
+        deleteProfessorEvent:
+            './src/views/professorEvents/DeleteProfessorEvent.view.ts',
+        insertTerm: './src/views/terms/InsertTerm.view.ts',
+        updateTerm: './src/views/terms/UpdateTerm.view.ts',
+        deleteTerm: './src/views/terms/DeleteTerm.view.ts'
     },
     module: {
         rules: [
