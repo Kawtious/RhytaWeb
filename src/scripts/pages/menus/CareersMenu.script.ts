@@ -25,6 +25,7 @@ import { CareerDto } from '../../../dto/Career.dto';
 import { Career } from '../../../entities/Career.entity';
 import { CareerRequest } from '../../../requests/Career.request';
 import { refreshAuthToken } from '../../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../../utils/cookies/PageUrlConstants.util';
 
 const careerRequest = new CareerRequest();
 
@@ -86,6 +87,8 @@ $(async () => {
     await refreshAuthToken();
 
     await refreshCareersList();
+
+    $('#home-button').attr('href', PageUrlConstants.HOME);
 
     $('#career-insert-button').on('click', async function (e) {
         e.preventDefault();

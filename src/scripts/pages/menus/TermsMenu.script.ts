@@ -25,6 +25,7 @@ import { TermDto } from '../../../dto/Term.dto';
 import { Term } from '../../../entities/Term.entity';
 import { TermRequest } from '../../../requests/Term.request';
 import { refreshAuthToken } from '../../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../../utils/cookies/PageUrlConstants.util';
 
 const termRequest = new TermRequest();
 
@@ -99,6 +100,8 @@ $(async () => {
     await refreshAuthToken();
 
     await refreshTermsList();
+
+    $('#home-button').attr('href', PageUrlConstants.HOME);
 
     $('#term-insert-button').on('click', async function (e) {
         e.preventDefault();

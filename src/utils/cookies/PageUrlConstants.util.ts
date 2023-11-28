@@ -21,27 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import $ from 'jquery';
-import Cookies from 'js-cookie';
+export class PageUrlConstants {
+    public static INDEX: string = '/RhytaWeb/pages/index.html';
+    public static HOME: string = '/RhytaWeb/pages/home.html';
 
-import { authenticate } from '../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
+    public static LOGIN_USER: string = '/RhytaWeb/pages/auth/loginUser.html';
+    public static REGISTER_USER: string =
+        '/RhytaWeb/pages/auth/registerUser.html';
+    public static LOGOUT_USER: string = '/RhytaWeb/pages/auth/logoutUser.html';
 
-$(async () => {
-    const token = Cookies.get('jwt-auth-token');
-
-    if (!token) {
-        window.location.replace(PageUrlConstants.LOGIN_USER);
-        return;
-    }
-
-    authenticate(token)
-        .then((result) => {
-            if (!result) {
-                window.location.replace(PageUrlConstants.LOGIN_USER);
-            }
-        })
-        .catch(() => {
-            window.location.replace(PageUrlConstants.LOGIN_USER);
-        });
-});
+    public static CAREERS_MENU: string =
+        '/RhytaWeb/pages/menus/careersMenu.html';
+    public static COURSES_MENU: string =
+        '/RhytaWeb/pages/menus/coursesMenu.html';
+    public static PROFESSORS_MENU: string =
+        '/RhytaWeb/pages/menus/professorsMenu.html';
+    public static TERMS_MENU: string = '/RhytaWeb/pages/menus/termsMenu.html';
+}

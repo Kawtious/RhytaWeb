@@ -26,6 +26,7 @@ import { CourseDto } from '../../../dto/Course.dto';
 import { Course } from '../../../entities/Course.entity';
 import { CourseRequest } from '../../../requests/Course.request';
 import { refreshAuthToken } from '../../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../../utils/cookies/PageUrlConstants.util';
 
 const courseRequest = new CourseRequest();
 
@@ -91,6 +92,8 @@ $(async () => {
     await refreshAuthToken();
 
     await refreshCoursesList();
+
+    $('#home-button').attr('href', PageUrlConstants.HOME);
 
     $('#course-insert-button').on('click', async function (e) {
         e.preventDefault();

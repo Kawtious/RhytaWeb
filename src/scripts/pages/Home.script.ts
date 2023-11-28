@@ -27,6 +27,7 @@ import { ProfessorRequest } from '../../requests/Professor.request';
 import { ProfessorEventRequest } from '../../requests/ProfessorEvent.request';
 import { TermRequest } from '../../requests/Term.request';
 import { refreshAuthToken } from '../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 const careerRequest = new CareerRequest();
 const courseRequest = new CourseRequest();
@@ -72,7 +73,7 @@ $(async () => {
         .on('click', async function (e) {
             e.preventDefault();
 
-            window.location.href = '/RhytaWeb/pages/menus/careersMenu.html';
+            window.location.href = PageUrlConstants.CAREERS_MENU;
         });
 
     $('#courses-div')
@@ -80,7 +81,7 @@ $(async () => {
         .on('click', async function (e) {
             e.preventDefault();
 
-            window.location.href = '/RhytaWeb/pages/menus/coursesMenu.html';
+            window.location.href = PageUrlConstants.COURSES_MENU;
         });
 
     $('#professors-div')
@@ -88,7 +89,7 @@ $(async () => {
         .on('click', async function (e) {
             e.preventDefault();
 
-            window.location.href = '/RhytaWeb/pages/menus/professorsMenu.html';
+            window.location.href = PageUrlConstants.PROFESSORS_MENU;
         });
 
     $('#terms-div')
@@ -96,6 +97,6 @@ $(async () => {
         .on('click', async function (e) {
             e.preventDefault();
 
-            window.location.href = '/RhytaWeb/pages/menus/termsMenu.html';
+            window.location.href = PageUrlConstants.TERMS_MENU;
         });
 });

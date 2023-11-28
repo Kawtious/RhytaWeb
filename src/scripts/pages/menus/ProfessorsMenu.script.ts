@@ -28,6 +28,7 @@ import { ProfessorEvent } from '../../../entities/ProfessorEvent.entity';
 import { ProfessorRequest } from '../../../requests/Professor.request';
 import { ProfessorEventRequest } from '../../../requests/ProfessorEvent.request';
 import { refreshAuthToken } from '../../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../../utils/cookies/PageUrlConstants.util';
 
 const professorRequest = new ProfessorRequest();
 const professorEventRequest = new ProfessorEventRequest();
@@ -196,6 +197,8 @@ $(async () => {
     await refreshProfessorsList();
 
     await refreshProfessorEventsList();
+
+    $('#home-button').attr('href', PageUrlConstants.HOME);
 
     $('#professor-insert-button').on('click', async function (e) {
         e.preventDefault();
