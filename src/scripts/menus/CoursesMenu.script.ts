@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { CareerDto } from '../../../dto/Career.dto';
-import { CourseDto } from '../../../dto/Course.dto';
-import { Course } from '../../../entities/Course.entity';
-import { CourseRequest } from '../../../requests/Course.request';
-import { refreshAuthToken } from '../../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../../utils/cookies/PageUrlConstants.util';
+import { CareerDto } from '../../dto/Career.dto';
+import { CourseDto } from '../../dto/Course.dto';
+import { Course } from '../../entities/Course.entity';
+import { CourseRequest } from '../../requests/Course.request';
+import { refreshAuthToken } from '../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 const courseRequest = new CourseRequest();
 

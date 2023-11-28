@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { CareerRequest } from '../../requests/Career.request';
-import { CourseRequest } from '../../requests/Course.request';
-import { ProfessorRequest } from '../../requests/Professor.request';
-import { ProfessorEventRequest } from '../../requests/ProfessorEvent.request';
-import { TermRequest } from '../../requests/Term.request';
-import { refreshAuthToken } from '../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
+import { CareerRequest } from '../requests/Career.request';
+import { CourseRequest } from '../requests/Course.request';
+import { ProfessorRequest } from '../requests/Professor.request';
+import { ProfessorEventRequest } from '../requests/ProfessorEvent.request';
+import { TermRequest } from '../requests/Term.request';
+import { refreshAuthToken } from '../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../utils/cookies/PageUrlConstants.util';
 
 const careerRequest = new CareerRequest();
 const courseRequest = new CourseRequest();

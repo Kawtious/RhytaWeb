@@ -22,19 +22,15 @@
  * THE SOFTWARE.
  */
 export class PageUrlConstants {
-    public static INDEX: string = '/RhytaWeb/pages/index.html';
-    public static HOME: string = '/RhytaWeb/pages/home.html';
+    public static INDEX: string = '/index.html';
+    public static HOME: string = '/home.html';
 
-    public static LOGIN_USER: string = '/RhytaWeb/pages/auth/loginUser.html';
-    public static REGISTER_USER: string =
-        '/RhytaWeb/pages/auth/registerUser.html';
-    public static LOGOUT_USER: string = '/RhytaWeb/pages/auth/logoutUser.html';
+    public static LOGIN_USER: string = '/login.html';
+    public static REGISTER_USER: string = '/signIn.html';
+    public static LOGOUT_USER: string = '/logout.html';
 
-    public static CAREERS_MENU: string =
-        '/RhytaWeb/pages/menus/careersMenu.html';
-    public static COURSES_MENU: string =
-        '/RhytaWeb/pages/menus/coursesMenu.html';
-    public static PROFESSORS_MENU: string =
-        '/RhytaWeb/pages/menus/professorsMenu.html';
-    public static TERMS_MENU: string = '/RhytaWeb/pages/menus/termsMenu.html';
+    public static CAREERS_MENU: string = '/careers.html';
+    public static COURSES_MENU: string = '/courses.html';
+    public static PROFESSORS_MENU: string = '/professors.html';
+    public static TERMS_MENU: string = '/terms.html';
 }

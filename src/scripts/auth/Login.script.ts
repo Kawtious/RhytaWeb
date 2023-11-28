@@ -21,13 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import $ from 'jquery';
+import { LoginRequestDto } from '../../dto/LoginRequest.dto';
+import { AuthRequest } from '../../requests/Auth.request';
+import { authenticate } from '../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
-import { resetTokenCookie } from '../../utils/cookies/JwtAuth.util';
-
-const loginRedirect = '/RhytaWeb/pages/auth/loginUser.html';
+const authRequest = new AuthRequest();
 
 $(async () => {
-    await resetTokenCookie();
-    window.location.replace(loginRedirect);
+    $('#login-button').on('click', async function (e) {
+        e.preventDefault();
+
+        const identifier = $('#login-identifier-input').val() as string;
+        const password = $('#login-password-input').val() as string;
+
+        const registerUserDto: LoginRequestDto = {
+            identifier: identifier,
+            password: password
+        };
+
+        authRequest
+            .login(registerUserDto)
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+                return authenticate(result.data.accessToken);
+            })
+            .then(() => {
+                window.location.replace(PageUrlConstants.HOME);
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
 });

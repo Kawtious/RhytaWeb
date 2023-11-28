@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { CareerDto } from '../../../dto/Career.dto';
-import { Career } from '../../../entities/Career.entity';
-import { CareerRequest } from '../../../requests/Career.request';
-import { refreshAuthToken } from '../../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../../utils/cookies/PageUrlConstants.util';
+import { CareerDto } from '../../dto/Career.dto';
+import { Career } from '../../entities/Career.entity';
+import { CareerRequest } from '../../requests/Career.request';
+import { refreshAuthToken } from '../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 const careerRequest = new CareerRequest();
 

@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { ProfessorDto } from '../../../dto/Professor.dto';
-import { ProfessorEventDto } from '../../../dto/ProfessorEvent.dto';
-import { Professor } from '../../../entities/Professor.entity';
-import { ProfessorEvent } from '../../../entities/ProfessorEvent.entity';
-import { ProfessorRequest } from '../../../requests/Professor.request';
-import { ProfessorEventRequest } from '../../../requests/ProfessorEvent.request';
-import { refreshAuthToken } from '../../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../../utils/cookies/PageUrlConstants.util';
+import { ProfessorDto } from '../../dto/Professor.dto';
+import { ProfessorEventDto } from '../../dto/ProfessorEvent.dto';
+import { Professor } from '../../entities/Professor.entity';
+import { ProfessorEvent } from '../../entities/ProfessorEvent.entity';
+import { ProfessorRequest } from '../../requests/Professor.request';
+import { ProfessorEventRequest } from '../../requests/ProfessorEvent.request';
+import { refreshAuthToken } from '../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 const professorRequest = new ProfessorRequest();
 const professorEventRequest = new ProfessorEventRequest();

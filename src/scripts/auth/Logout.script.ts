@@ -21,9 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import $ from 'jquery';
+
+import { resetTokenCookie } from '../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
+
 $(async () => {
-    const app = document.getElementById('app');
-    const p = document.createElement('p');
-    p.textContent = 'Hello, World!';
-    app?.appendChild(p);
+    await resetTokenCookie();
+    window.location.replace(PageUrlConstants.LOGIN_USER);
 });

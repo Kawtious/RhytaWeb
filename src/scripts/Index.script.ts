@@ -21,32 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { RegisterUserDto } from '../../../dto/RegisterUser.dto';
-import { AuthRequest } from '../../../requests/Auth.request';
-
-const authRequest = new AuthRequest();
+import { refreshAuthToken } from '../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../utils/cookies/PageUrlConstants.util';
 
 $(async () => {
-    $('#registration-button').on('click', async function (e) {
-        e.preventDefault();
+    await refreshAuthToken();
 
-        const username = $('#registration-username-input').val() as string;
-        const email = $('#registration-email-input').val() as string;
-        const password = $('#registration-password-input').val() as string;
+    const app = document.getElementById('app');
+    const p = document.createElement('p');
+    p.textContent = 'Hello, World!';
+    app?.appendChild(p);
 
-        const registerUserDto: RegisterUserDto = {
-            username: username,
-            email: email,
-            password: password
-        };
-
-        authRequest
-            .register(registerUserDto)
-            .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
-            })
-            .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
-            });
-    });
+    window.location.replace(PageUrlConstants.HOME);
 });

@@ -21,32 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { LoginRequestDto } from '../../../dto/LoginRequest.dto';
-import { AuthRequest } from '../../../requests/Auth.request';
-import { authenticate } from '../../../utils/cookies/JwtAuth.util';
+import { RegisterUserDto } from '../../dto/RegisterUser.dto';
+import { AuthRequest } from '../../requests/Auth.request';
 
 const authRequest = new AuthRequest();
 
 $(async () => {
-    $('#login-button').on('click', async function (e) {
+    $('#sign-in-button').on('click', async function (e) {
         e.preventDefault();
 
-        const identifier = $('#login-identifier-input').val() as string;
-        const password = $('#login-password-input').val() as string;
+        const username = $('#sign-in-username-input').val() as string;
+        const email = $('#sign-in-email-input').val() as string;
+        const password = $('#sign-in-password-input').val() as string;
 
-        const registerUserDto: LoginRequestDto = {
-            identifier: identifier,
+        const registerUserDto: RegisterUserDto = {
+            username: username,
+            email: email,
             password: password
         };
 
         authRequest
-            .login(registerUserDto)
+            .register(registerUserDto)
             .then((result) => {
                 $('#response-message').text(JSON.stringify(result.data));
-                return authenticate(result.data.accessToken);
-            })
-            .then(() => {
-                window.location.replace('/RhytaWeb/pages/home.html');
             })
             .catch((error) => {
                 $('#response-message').text(JSON.stringify(error.response));

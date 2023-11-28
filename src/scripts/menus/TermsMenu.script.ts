@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { TermDto } from '../../../dto/Term.dto';
-import { Term } from '../../../entities/Term.entity';
-import { TermRequest } from '../../../requests/Term.request';
-import { refreshAuthToken } from '../../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../../utils/cookies/PageUrlConstants.util';
+import { TermDto } from '../../dto/Term.dto';
+import { Term } from '../../entities/Term.entity';
+import { TermRequest } from '../../requests/Term.request';
+import { refreshAuthToken } from '../../utils/cookies/JwtAuth.util';
+import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 const termRequest = new TermRequest();
 
