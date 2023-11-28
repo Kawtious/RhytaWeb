@@ -46,14 +46,32 @@ async function refreshTermsList() {
             const termRow = document.createElement('tr');
             termRow.style.cursor = 'pointer';
             termRow.onclick = async function () {
-                selectedTerm = term;
+                const termUpdateTitleInput = $('#term-update-title-input');
+                const termUpdateDescriptionInput = $(
+                    '#term-update-description-input'
+                );
+                const termUpdateStartDateInput = $(
+                    '#term-update-start-date-input'
+                );
+                const termUpdateEndDateInput = $('#term-update-end-date-input');
 
-                $('#term-update-title-input').val(term.title);
-                $('#term-update-description-input').val(term.description);
-                $('#term-update-start-date-input').val(
+                if (selectedTerm == term) {
+                    selectedTerm = null;
+                    termUpdateTitleInput.val('');
+                    termUpdateDescriptionInput.val('');
+                    termUpdateStartDateInput.val('');
+                    termUpdateEndDateInput.val('');
+
+                    return;
+                }
+
+                selectedTerm = term;
+                termUpdateTitleInput.val(term.title);
+                termUpdateDescriptionInput.val(term.description);
+                termUpdateStartDateInput.val(
                     new Date(term.startDate).toISOString().slice(0, 10)
                 );
-                $('#term-update-end-date-input').val(
+                termUpdateEndDateInput.val(
                     new Date(term.endDate).toISOString().slice(0, 10)
                 );
             };

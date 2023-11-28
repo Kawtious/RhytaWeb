@@ -51,13 +51,6 @@ async function refreshProfessorsList() {
             const professorRow = document.createElement('tr');
             professorRow.style.cursor = 'pointer';
             professorRow.onclick = async function () {
-                selectedProfessor = professor;
-
-                $('#professor-update-first-name-input').val(
-                    professor.firstName
-                );
-                $('#professor-update-last-name-input').val(professor.lastName);
-
                 selectedProfessorEvent = null;
                 $('#professor-event-insert-title-input').val('');
                 $('#professor-event-insert-description-input').val('');
@@ -67,6 +60,27 @@ async function refreshProfessorsList() {
                 $('#professor-event-update-description-input').val('');
                 $('#professor-event-update-start-date-input').val('');
                 $('#professor-event-update-end-date-input').val('');
+
+                const professorUpdateFirstNameInput = $(
+                    '#professor-update-first-name-input'
+                );
+                const professorUpdateLastNameInput = $(
+                    '#professor-update-last-name-input'
+                );
+
+                if (selectedProfessor == professor) {
+                    selectedProfessor = null;
+                    professorUpdateFirstNameInput.val('');
+                    professorUpdateLastNameInput.val('');
+
+                    await refreshProfessorEventsList();
+
+                    return;
+                }
+
+                selectedProfessor = professor;
+                professorUpdateFirstNameInput.val(professor.firstName);
+                professorUpdateLastNameInput.val(professor.lastName);
 
                 await refreshProfessorEventsList();
             };
@@ -126,20 +140,40 @@ async function refreshProfessorEventsList() {
             const professorEventRow = document.createElement('tr');
             professorEventRow.style.cursor = 'pointer';
             professorEventRow.onclick = async function () {
-                selectedProfessorEvent = professorEvent;
-
-                $('#professor-event-update-title-input').val(
-                    professorEvent.title
+                const professorEventUpdateTitleInput = $(
+                    '#professor-event-update-title-input'
                 );
-                $('#professor-event-update-description-input').val(
+                const professorEventUpdateDescriptionInput = $(
+                    '#professor-event-update-description-input'
+                );
+                const professorEventUpdateStartDateInput = $(
+                    '#professor-event-update-start-date-input'
+                );
+                const professorEventUpdateEndDateInput = $(
+                    '#professor-event-update-end-date-input'
+                );
+
+                if (selectedProfessorEvent == professorEvent) {
+                    selectedProfessorEvent = null;
+                    professorEventUpdateTitleInput.val('');
+                    professorEventUpdateDescriptionInput.val('');
+                    professorEventUpdateStartDateInput.val('');
+                    professorEventUpdateEndDateInput.val('');
+
+                    return;
+                }
+
+                selectedProfessorEvent = professorEvent;
+                professorEventUpdateTitleInput.val(professorEvent.title);
+                professorEventUpdateDescriptionInput.val(
                     professorEvent.description
                 );
-                $('#professor-event-update-start-date-input').val(
+                professorEventUpdateStartDateInput.val(
                     new Date(professorEvent.startDate)
                         .toISOString()
                         .slice(0, 10)
                 );
-                $('#professor-event-update-end-date-input').val(
+                professorEventUpdateEndDateInput.val(
                     new Date(professorEvent.endDate).toISOString().slice(0, 10)
                 );
             };

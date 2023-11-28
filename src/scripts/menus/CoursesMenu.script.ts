@@ -47,11 +47,27 @@ async function refreshCoursesList() {
             const courseRow = document.createElement('tr');
             courseRow.style.cursor = 'pointer';
             courseRow.onclick = async function () {
-                selectedCourse = course;
+                const courseUpdateNameInput = $('#course-update-name-input');
+                const courseUpdateDescriptionInput = $(
+                    '#course-update-description-input'
+                );
+                const courseUpdateCareerIdInput = $(
+                    '#course-update-career-id-input'
+                );
 
-                $('#course-update-name-input').val(course.name);
-                $('#course-update-description-input').val(course.description);
-                $('#course-update-career-id-input').val(course.career.id);
+                if (selectedCourse == course) {
+                    selectedCourse = null;
+                    courseUpdateNameInput.val('');
+                    courseUpdateDescriptionInput.val('');
+                    courseUpdateCareerIdInput.val('');
+
+                    return;
+                }
+
+                selectedCourse = course;
+                courseUpdateNameInput.val(course.name);
+                courseUpdateDescriptionInput.val(course.description);
+                courseUpdateCareerIdInput.val(course.career.id);
             };
 
             const courseIdColumn = document.createElement('td');

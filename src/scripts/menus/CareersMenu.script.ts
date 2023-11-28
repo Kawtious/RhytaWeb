@@ -47,10 +47,22 @@ async function refreshCareersList() {
             const careerRow = document.createElement('tr');
             careerRow.style.cursor = 'pointer';
             careerRow.onclick = async function () {
-                selectedCareer = career;
+                const careerUpdateNameInput = $('#career-update-name-input');
+                const careerUpdateDescriptionInput = $(
+                    '#career-update-description-input'
+                );
 
-                $('#career-update-name-input').val(career.name);
-                $('#career-update-description-input').val(career.description);
+                if (selectedCareer == career) {
+                    selectedCareer = null;
+                    careerUpdateNameInput.val('');
+                    careerUpdateDescriptionInput.val('');
+
+                    return;
+                }
+
+                selectedCareer = career;
+                careerUpdateNameInput.val(career.name);
+                careerUpdateDescriptionInput.val(career.description);
             };
 
             const careerIdColumn = document.createElement('td');
