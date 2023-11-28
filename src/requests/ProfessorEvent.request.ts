@@ -38,6 +38,12 @@ export class ProfessorEventRequest {
         );
     }
 
+    async getAllByProfessorId(professorId: number) {
+        return await axiosInstance.get<ProfessorEvent[]>(
+            `/${this.professorEventEndpoint}/${professorId}`
+        );
+    }
+
     async getByProfessorId(professorId: number, eventId: number) {
         return await axiosInstance.get<ProfessorEvent>(
             `/${this.professorEventEndpoint}/${professorId}/${eventId}`

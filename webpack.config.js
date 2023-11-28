@@ -12,6 +12,7 @@ module.exports = {
         loginUser: './src/scripts/pages/auth/LoginUser.script.ts',
         careersMenu: './src/scripts/pages/menus/CareersMenu.script.ts',
         coursesMenu: './src/scripts/pages/menus/CoursesMenu.script.ts',
+        professorsMenu: './src/scripts/pages/menus/ProfessorsMenu.script.ts',
         termsMenu: './src/scripts/pages/menus/TermsMenu.script.ts'
     },
     module: {
