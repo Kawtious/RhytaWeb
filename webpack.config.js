@@ -11,7 +11,8 @@ module.exports = {
         registerUser: './src/scripts/pages/auth/RegisterUser.script.ts',
         loginUser: './src/scripts/pages/auth/LoginUser.script.ts',
         careersMenu: './src/scripts/pages/menus/CareersMenu.script.ts',
-        coursesMenu: './src/scripts/pages/menus/CoursesMenu.script.ts'
+        coursesMenu: './src/scripts/pages/menus/CoursesMenu.script.ts',
+        termsMenu: './src/scripts/pages/menus/TermsMenu.script.ts'
     },
     module: {
         rules: [
