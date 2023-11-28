@@ -28,7 +28,7 @@ import { authenticate } from '../../../utils/cookies/JwtAuth.util';
 const authRequest = new AuthRequest();
 
 $(async () => {
-    $('#login-button').on('click', function (e) {
+    $('#login-button').on('click', async function (e) {
         e.preventDefault();
 
         const identifier = $('#login-identifier-input').val() as string;

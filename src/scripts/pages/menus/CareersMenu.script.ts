@@ -45,7 +45,7 @@ async function refreshCareersList() {
         for (const career of result.data) {
             const careerRow = document.createElement('tr');
             careerRow.style.cursor = 'pointer';
-            careerRow.onclick = function () {
+            careerRow.onclick = async function () {
                 selectedCareer = career;
 
                 $('#career-update-name-input').val(career.name);
@@ -87,7 +87,7 @@ $(async () => {
 
     await refreshCareersList();
 
-    $('#career-insert-button').on('click', function (e) {
+    $('#career-insert-button').on('click', async function (e) {
         e.preventDefault();
 
         const name = $('#career-insert-name-input').val() as string;
@@ -115,7 +115,7 @@ $(async () => {
             });
     });
 
-    $('#career-update-button').on('click', function (e) {
+    $('#career-update-button').on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedCareer) {
@@ -151,7 +151,7 @@ $(async () => {
             });
     });
 
-    $('#career-delete-button').on('click', function (e) {
+    $('#career-delete-button').on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedCareer) {

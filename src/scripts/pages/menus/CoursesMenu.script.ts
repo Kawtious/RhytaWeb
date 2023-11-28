@@ -45,7 +45,7 @@ async function refreshCoursesList() {
         for (const course of result.data) {
             const courseRow = document.createElement('tr');
             courseRow.style.cursor = 'pointer';
-            courseRow.onclick = function () {
+            courseRow.onclick = async function () {
                 selectedCourse = course;
 
                 $('#course-update-name-input').val(course.name);
@@ -92,7 +92,7 @@ $(async () => {
 
     await refreshCoursesList();
 
-    $('#course-insert-button').on('click', function (e) {
+    $('#course-insert-button').on('click', async function (e) {
         e.preventDefault();
 
         const name = $('#course-insert-name-input').val() as string;
@@ -123,7 +123,7 @@ $(async () => {
             });
     });
 
-    $('#course-update-button').on('click', function (e) {
+    $('#course-update-button').on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedCourse) {
@@ -162,7 +162,7 @@ $(async () => {
             });
     });
 
-    $('#course-delete-button').on('click', function (e) {
+    $('#course-delete-button').on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedCourse) {

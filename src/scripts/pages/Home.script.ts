@@ -69,7 +69,7 @@ $(async () => {
 
     $('#careers-div')
         .css('cursor', 'pointer')
-        .on('click', function (e) {
+        .on('click', async function (e) {
             e.preventDefault();
 
             window.location.href = '/RhytaWeb/pages/menus/careersMenu.html';
@@ -77,7 +77,7 @@ $(async () => {
 
     $('#courses-div')
         .css('cursor', 'pointer')
-        .on('click', function (e) {
+        .on('click', async function (e) {
             e.preventDefault();
 
             window.location.href = '/RhytaWeb/pages/menus/coursesMenu.html';
@@ -85,7 +85,7 @@ $(async () => {
 
     $('#professors-div')
         .css('cursor', 'pointer')
-        .on('click', function (e) {
+        .on('click', async function (e) {
             e.preventDefault();
 
             window.location.href = '/RhytaWeb/pages/menus/professorsMenu.html';
@@ -93,7 +93,7 @@ $(async () => {
 
     $('#terms-div')
         .css('cursor', 'pointer')
-        .on('click', function (e) {
+        .on('click', async function (e) {
             e.preventDefault();
 
             window.location.href = '/RhytaWeb/pages/menus/termsMenu.html';

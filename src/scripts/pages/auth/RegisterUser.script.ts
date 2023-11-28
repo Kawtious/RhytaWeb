@@ -27,7 +27,7 @@ import { AuthRequest } from '../../../requests/Auth.request';
 const authRequest = new AuthRequest();
 
 $(async () => {
-    $('#registration-button').on('click', function (e) {
+    $('#registration-button').on('click', async function (e) {
         e.preventDefault();
 
         const username = $('#registration-username-input').val() as string;

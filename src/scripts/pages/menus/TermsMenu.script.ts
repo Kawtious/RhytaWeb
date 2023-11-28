@@ -44,7 +44,7 @@ async function refreshTermsList() {
         for (const term of result.data) {
             const termRow = document.createElement('tr');
             termRow.style.cursor = 'pointer';
-            termRow.onclick = function () {
+            termRow.onclick = async function () {
                 selectedTerm = term;
 
                 $('#term-update-title-input').val(term.title);
@@ -100,7 +100,7 @@ $(async () => {
 
     await refreshTermsList();
 
-    $('#term-insert-button').on('click', function (e) {
+    $('#term-insert-button').on('click', async function (e) {
         e.preventDefault();
 
         const title = $('#term-insert-title-input').val() as string;
@@ -132,7 +132,7 @@ $(async () => {
             });
     });
 
-    $('#term-update-button').on('click', function (e) {
+    $('#term-update-button').on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedTerm) {
@@ -172,7 +172,7 @@ $(async () => {
             });
     });
 
-    $('#term-delete-button').on('click', function (e) {
+    $('#term-delete-button').on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedTerm) {
