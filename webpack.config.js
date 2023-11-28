@@ -10,7 +10,8 @@ module.exports = {
         home: './src/scripts/pages/Home.script.ts',
         registerUser: './src/scripts/pages/auth/RegisterUser.script.ts',
         loginUser: './src/scripts/pages/auth/LoginUser.script.ts',
-        careersMenu: './src/scripts/pages/menus/CareersMenu.script.ts'
+        careersMenu: './src/scripts/pages/menus/CareersMenu.script.ts',
+        coursesMenu: './src/scripts/pages/menus/CoursesMenu.script.ts'
     },
     module: {
         rules: [
