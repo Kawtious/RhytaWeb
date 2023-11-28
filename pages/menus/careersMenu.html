@@ -9,18 +9,68 @@
     <body>
         <header></header>
         <section>
-            <table id="careers-list">
-                <tr>
-                    <th>ID</th>
-                    <th>Created Date</th>
-                    <th>Updated Date</th>
-                    <th>Version</th>
-                    <th>Name</th>
-                    <th>Description</th>
+            <table id="careers-table">
+                <tr id="careers-table-headers-row">
+                    <th id="careers-table-id-header">ID</th>
+                    <th id="careers-table-created-date-header">Created Date</th>
+                    <th id="careers-table-updated-date-header">Updated Date</th>
+                    <th id="careers-table-version-header">Version</th>
+                    <th id="careers-table-name-header">Name</th>
+                    <th id="careers-table-description-header">Description</th>
                 </tr>
             </table>
         </section>
-        <section></section>
+        <section class="hidden">
+            <form id="career-insert-form">
+                <label
+                    id="career-insert-name-label"
+                    for="career-insert-name-input"
+                    >Name:</label
+                >
+                <input
+                    id="career-insert-name-input"
+                    type="text"
+                    autocomplete="off"
+                />
+                <label
+                    id="career-insert-description-label"
+                    for="career-insert-description-input"
+                    >Description:</label
+                >
+                <input
+                    id="career-insert-description-input"
+                    type="text"
+                    autocomplete="off"
+                />
+                <button id="career-insert-button">Insert</button>
+            </form>
+        </section>
+        <section class="hidden">
+            <form id="career-update-form">
+                <label
+                    id="career-update-name-label"
+                    for="career-update-name-input"
+                    >Name:</label
+                >
+                <input
+                    id="career-update-name-input"
+                    type="text"
+                    autocomplete="off"
+                />
+                <label
+                    id="career-update-description-label"
+                    for="career-update-description-input"
+                    >Description:</label
+                >
+                <input
+                    id="career-update-description-input"
+                    type="text"
+                    autocomplete="off"
+                />
+                <button id="career-update-button">Update</button>
+                <button id="career-delete-button">Delete</button>
+            </form>
+        </section>
         <footer></footer>
     </body>
 </html>

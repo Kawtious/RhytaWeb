@@ -21,48 +21,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import { CareerDto } from '../../../dto/Career.dto';
+import { Career } from '../../../entities/Career.entity';
 import { CareerRequest } from '../../../requests/Career.request';
 import { refreshAuthToken } from '../../../utils/cookies/JwtAuth.util';
 
 const careerRequest = new CareerRequest();
 
+let selectedCareer: Career | null;
+
 async function refreshCareersList() {
     careerRequest.getAll().then((result) => {
-        const careersList = document.getElementById('careers-list');
+        const careersTable = $('#careers-table');
 
-        if (careersList) {
-            for (const career of result.data) {
-                const careerRow = document.createElement('tr');
+        // Store headers row before removing it
+        const careersTableHeadersRow = $('#careers-table-headers-row');
 
-                const careerIdColumn = document.createElement('td');
-                careerIdColumn.textContent = career.id.toString();
+        careersTable.html('');
 
-                const careerCreatedDateColumn = document.createElement('td');
-                careerCreatedDateColumn.textContent =
-                    career.createdDate.toString();
+        // What a funny hack haha!
+        careersTable.append(careersTableHeadersRow);
 
-                const careerUpdatedDateColumn = document.createElement('td');
-                careerUpdatedDateColumn.textContent =
-                    career.updatedDate.toString();
+        for (const career of result.data) {
+            const careerRow = document.createElement('tr');
+            careerRow.style.cursor = 'pointer';
+            careerRow.onclick = function () {
+                selectedCareer = career;
 
-                const careerVersionColumn = document.createElement('td');
-                careerVersionColumn.textContent = career.version.toString();
+                $('#career-update-name-input').val(career.name);
+                $('#career-update-description-input').val(career.description);
+            };
 
-                const careerNameColumn = document.createElement('td');
-                careerNameColumn.textContent = career.name;
+            const careerIdColumn = document.createElement('td');
+            careerIdColumn.textContent = career.id.toString();
 
-                const careerDescriptionColumn = document.createElement('td');
-                careerDescriptionColumn.textContent = career.description;
+            const careerCreatedDateColumn = document.createElement('td');
+            careerCreatedDateColumn.textContent = career.createdDate.toString();
 
-                careerRow.appendChild(careerIdColumn);
-                careerRow.appendChild(careerCreatedDateColumn);
-                careerRow.appendChild(careerUpdatedDateColumn);
-                careerRow.appendChild(careerVersionColumn);
-                careerRow.appendChild(careerNameColumn);
-                careerRow.appendChild(careerDescriptionColumn);
+            const careerUpdatedDateColumn = document.createElement('td');
+            careerUpdatedDateColumn.textContent = career.updatedDate.toString();
 
-                careersList.appendChild(careerRow);
-            }
+            const careerVersionColumn = document.createElement('td');
+            careerVersionColumn.textContent = career.version.toString();
+
+            const careerNameColumn = document.createElement('td');
+            careerNameColumn.textContent = career.name;
+
+            const careerDescriptionColumn = document.createElement('td');
+            careerDescriptionColumn.textContent = career.description;
+
+            careerRow.appendChild(careerIdColumn);
+            careerRow.appendChild(careerCreatedDateColumn);
+            careerRow.appendChild(careerUpdatedDateColumn);
+            careerRow.appendChild(careerVersionColumn);
+            careerRow.appendChild(careerNameColumn);
+            careerRow.appendChild(careerDescriptionColumn);
+
+            careersTable.append(careerRow);
         }
     });
 }
@@ -71,4 +86,93 @@ $(async () => {
     await refreshAuthToken();
 
     await refreshCareersList();
+
+    $('#career-insert-button').on('click', function (e) {
+        e.preventDefault();
+
+        const name = $('#career-insert-name-input').val() as string;
+        const description = $(
+            '#career-insert-description-input'
+        ).val() as string;
+
+        const careerDto: CareerDto = {
+            name: name,
+            description: description
+        };
+
+        careerRequest
+            .insert(careerDto)
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+
+                $('#career-insert-name-input').val('');
+                $('#career-insert-description-input').val('');
+
+                return refreshCareersList();
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
+
+    $('#career-update-button').on('click', function (e) {
+        e.preventDefault();
+
+        if (!selectedCareer) {
+            return;
+        }
+
+        const id = selectedCareer.id;
+        const version = selectedCareer.version;
+        const name = $('#career-update-name-input').val() as string;
+        const description = $(
+            '#career-update-description-input'
+        ).val() as string;
+
+        const careerDto: CareerDto = {
+            version: version,
+            name: name,
+            description: description
+        };
+
+        careerRequest
+            .update(id, careerDto)
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+
+                selectedCareer = null;
+                $('#career-update-name-input').val('');
+                $('#career-update-description-input').val('');
+
+                return refreshCareersList();
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
+
+    $('#career-delete-button').on('click', function (e) {
+        e.preventDefault();
+
+        if (!selectedCareer) {
+            return;
+        }
+
+        const id = selectedCareer.id;
+
+        careerRequest
+            .delete(id)
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+
+                selectedCareer = null;
+                $('#career-update-name-input').val('');
+                $('#career-update-description-input').val('');
+
+                return refreshCareersList();
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
 });
