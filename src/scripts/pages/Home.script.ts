@@ -38,45 +38,33 @@ $(async () => {
     await refreshAuthToken();
 
     careerRequest.getAll().then((result) => {
-        const careersCount = document.getElementById('careers-count');
+        const careersCount = $('#careers-count');
 
-        if (careersCount) {
-            careersCount.textContent = `${result.data.length.toString()} Careers`;
-        }
+        careersCount.text(`${result.data.length.toString()} Careers`);
     });
 
     courseRequest.getAll().then((result) => {
-        const coursesCount = document.getElementById('courses-count');
+        const coursesCount = $('#courses-count');
 
-        if (coursesCount) {
-            coursesCount.textContent = `${result.data.length.toString()} Courses`;
-        }
+        coursesCount.text(`${result.data.length.toString()} Courses`);
     });
 
     professorRequest.getAll().then((result) => {
-        const professorsCount = document.getElementById('professors-count');
+        const professorsCount = $('#professors-count');
 
-        if (professorsCount) {
-            professorsCount.textContent = `${result.data.length.toString()} Professors`;
-        }
+        professorsCount.text(`${result.data.length.toString()} Professors`);
     });
 
     professorEventRequest.getAll().then((result) => {
-        const professorEventsCount = document.getElementById(
-            'professor-events-count'
-        );
+        const professorEventsCount = $('#professor-events-count');
 
-        if (professorEventsCount) {
-            professorEventsCount.textContent = `${result.data.length.toString()} Events`;
-        }
+        professorEventsCount.text(`${result.data.length.toString()} Events`);
     });
 
     termRequest.getAll().then((result) => {
-        const termsCount = document.getElementById('terms-count');
+        const termsCount = $('#terms-count');
 
-        if (termsCount) {
-            termsCount.textContent = `${result.data.length.toString()} Terms`;
-        }
+        termsCount.text(`${result.data.length.toString()} Terms`);
     });
 
     $('#careers-div')
