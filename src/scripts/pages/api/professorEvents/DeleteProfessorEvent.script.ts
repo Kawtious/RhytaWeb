@@ -21,36 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import Cookies from 'js-cookie';
+import { ProfessorEventRequest } from '../../../../requests/ProfessorEvent.request';
+import { refreshAuthToken } from '../../../../utils/cookies/JwtAuth.util';
 
-import { setAuthToken } from '../../configuration/Axios.configuration';
-import { UserRequest } from '../../requests/User.request';
+const professorEventRequest = new ProfessorEventRequest();
 
-const userRequest = new UserRequest();
+$(async () => {
+    await refreshAuthToken();
 
-export async function resetTokenCookie() {
-    Cookies.remove('jwt-auth-token');
-}
+    $('#professor-event-delete-button').on('click', function (e) {
+        e.preventDefault();
 
-export async function refreshAuthToken() {
-    const token = Cookies.get('jwt-auth-token');
+        const professorId = $(
+            '#professor-event-professor-id-input'
+        ).val() as string;
+        const id = $('#professor-event-id-input').val() as string;
 
-    if (token) {
-        await setAuthToken(token);
-    }
-}
-
-export async function authenticate(token: string): Promise<boolean> {
-    Cookies.set('jwt-auth-token', token);
-
-    await setAuthToken(token);
-
-    return userRequest
-        .getFromAuthHeader()
-        .then(() => {
-            return true;
-        })
-        .catch(() => {
-            return false;
-        });
-}
+        professorEventRequest
+            .deleteByProfessorId(parseInt(professorId), parseInt(id))
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
+});

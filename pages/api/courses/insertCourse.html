@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Insert Course</title>
+        <script src="../../../dist/authCheckOnLoad.bundle.js"></script>
+        <script defer src="../../../dist/insertCourse.bundle.js"></script>
+    </head>
+    <body>
+        <header></header>
+        <section>
+            <form id="course-insert-form">
+                <label id="course-name-label" for="course-name-input"
+                    >Name:</label
+                >
+                <input id="course-name-input" type="text" />
+                <label
+                    id="course-description-label"
+                    for="course-description-input"
+                    >Description:</label
+                >
+                <input id="course-description-input" type="text" />
+                <label id="course-career-id-label" for="course-career-id-input"
+                    >Career Id:</label
+                >
+                <input id="course-career-id-input" type="text" />
+                <button id="course-insert-button" name="insert">Insert</button>
+            </form>
+            <p id="response-message"></p>
+        </section>
+        <footer></footer>
+    </body>
+</html>

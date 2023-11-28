@@ -21,36 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import $ from 'jquery';
 import Cookies from 'js-cookie';
 
-import { setAuthToken } from '../../configuration/Axios.configuration';
-import { UserRequest } from '../../requests/User.request';
+import { authenticate } from '../../utils/cookies/JwtAuth.util';
 
-const userRequest = new UserRequest();
+const loginRedirect = '/RhytaWeb/pages/auth/loginUser.html';
 
-export async function resetTokenCookie() {
-    Cookies.remove('jwt-auth-token');
-}
-
-export async function refreshAuthToken() {
+$(async () => {
     const token = Cookies.get('jwt-auth-token');
 
-    if (token) {
-        await setAuthToken(token);
+    if (!token) {
+        window.location.replace(loginRedirect);
+        return;
     }
-}
 
-export async function authenticate(token: string): Promise<boolean> {
-    Cookies.set('jwt-auth-token', token);
-
-    await setAuthToken(token);
-
-    return userRequest
-        .getFromAuthHeader()
-        .then(() => {
-            return true;
+    authenticate(token)
+        .then((result) => {
+            if (!result) {
+                window.location.replace(loginRedirect);
+            }
         })
         .catch(() => {
-            return false;
+            window.location.replace(loginRedirect);
         });
-}
+});

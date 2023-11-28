@@ -21,36 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import Cookies from 'js-cookie';
+import { ProfessorRequest } from '../../../../requests/Professor.request';
+import { refreshAuthToken } from '../../../../utils/cookies/JwtAuth.util';
 
-import { setAuthToken } from '../../configuration/Axios.configuration';
-import { UserRequest } from '../../requests/User.request';
+const professorRequest = new ProfessorRequest();
 
-const userRequest = new UserRequest();
+$(async () => {
+    await refreshAuthToken();
 
-export async function resetTokenCookie() {
-    Cookies.remove('jwt-auth-token');
-}
+    $('#professor-delete-button').on('click', function (e) {
+        e.preventDefault();
 
-export async function refreshAuthToken() {
-    const token = Cookies.get('jwt-auth-token');
+        const id = $('#professor-id-input').val() as string;
 
-    if (token) {
-        await setAuthToken(token);
-    }
-}
-
-export async function authenticate(token: string): Promise<boolean> {
-    Cookies.set('jwt-auth-token', token);
-
-    await setAuthToken(token);
-
-    return userRequest
-        .getFromAuthHeader()
-        .then(() => {
-            return true;
-        })
-        .catch(() => {
-            return false;
-        });
-}
+        professorRequest
+            .delete(parseInt(id))
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
+});

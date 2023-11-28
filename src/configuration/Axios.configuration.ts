@@ -34,3 +34,7 @@ export const axiosInstance: AxiosInstance = axios.create({
         'Content-Type': 'application/json'
     }
 });
+
+export async function setAuthToken(token: string) {
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}

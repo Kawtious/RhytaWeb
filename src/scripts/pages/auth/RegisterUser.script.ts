@@ -21,36 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import Cookies from 'js-cookie';
+import { RegisterUserDto } from '../../../dto/RegisterUser.dto';
+import { AuthRequest } from '../../../requests/Auth.request';
 
-import { setAuthToken } from '../../configuration/Axios.configuration';
-import { UserRequest } from '../../requests/User.request';
+const authRequest = new AuthRequest();
 
-const userRequest = new UserRequest();
+$(async () => {
+    $('#registration-button').on('click', function (e) {
+        e.preventDefault();
 
-export async function resetTokenCookie() {
-    Cookies.remove('jwt-auth-token');
-}
+        const username = $('#registration-username-input').val() as string;
+        const email = $('#registration-email-input').val() as string;
+        const password = $('#registration-password-input').val() as string;
 
-export async function refreshAuthToken() {
-    const token = Cookies.get('jwt-auth-token');
+        const registerUserDto: RegisterUserDto = {
+            username: username,
+            email: email,
+            password: password
+        };
 
-    if (token) {
-        await setAuthToken(token);
-    }
-}
-
-export async function authenticate(token: string): Promise<boolean> {
-    Cookies.set('jwt-auth-token', token);
-
-    await setAuthToken(token);
-
-    return userRequest
-        .getFromAuthHeader()
-        .then(() => {
-            return true;
-        })
-        .catch(() => {
-            return false;
-        });
-}
+        authRequest
+            .register(registerUserDto)
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
+});

@@ -8,20 +8,16 @@
     <body>
         <header></header>
         <section>
-            <form id="form-login">
-                <label for="form-login-input-identifier">Username:</label><br />
-                <input
-                    type="text"
-                    id="form-login-input-identifier"
-                    name="identifier"
-                /><br />
-                <label for="form-login-input-password">Password:</label><br />
-                <input
-                    type="password"
-                    id="form-login-input-password"
-                    name="password"
-                /><br />
-                <button id="form-login-button-login" name="login">Login</button>
+            <form id="login-form">
+                <label id="login-identifier-label" for="login-identifier-input"
+                    >Username:</label
+                >
+                <input id="login-identifier-input" type="text" />
+                <label id="login-password-label" for="login-password-input"
+                    >Password:</label
+                >
+                <input id="login-password-input" type="password" />
+                <button id="login-button">Login</button>
             </form>
             <p id="response-message"></p>
         </section>

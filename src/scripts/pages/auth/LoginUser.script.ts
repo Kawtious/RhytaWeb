@@ -21,36 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import Cookies from 'js-cookie';
+import { LoginRequestDto } from '../../../dto/LoginRequest.dto';
+import { AuthRequest } from '../../../requests/Auth.request';
+import { authenticate } from '../../../utils/cookies/JwtAuth.util';
 
-import { setAuthToken } from '../../configuration/Axios.configuration';
-import { UserRequest } from '../../requests/User.request';
+const authRequest = new AuthRequest();
 
-const userRequest = new UserRequest();
+$(async () => {
+    $('#login-button').on('click', function (e) {
+        e.preventDefault();
 
-export async function resetTokenCookie() {
-    Cookies.remove('jwt-auth-token');
-}
+        const identifier = $('#login-identifier-input').val() as string;
+        const password = $('#login-password-input').val() as string;
 
-export async function refreshAuthToken() {
-    const token = Cookies.get('jwt-auth-token');
+        const registerUserDto: LoginRequestDto = {
+            identifier: identifier,
+            password: password
+        };
 
-    if (token) {
-        await setAuthToken(token);
-    }
-}
-
-export async function authenticate(token: string): Promise<boolean> {
-    Cookies.set('jwt-auth-token', token);
-
-    await setAuthToken(token);
-
-    return userRequest
-        .getFromAuthHeader()
-        .then(() => {
-            return true;
-        })
-        .catch(() => {
-            return false;
-        });
-}
+        authRequest
+            .login(registerUserDto)
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+                return authenticate(result.data.accessToken);
+            })
+            .then(() => {
+                window.location.replace('/RhytaWeb/pages/home.html');
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
+});

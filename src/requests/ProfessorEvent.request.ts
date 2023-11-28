@@ -32,26 +32,29 @@ export class ProfessorEventRequest {
         this.professorEventEndpoint = 'events';
     }
 
-    async getAll(professorId: number) {
+    async getAll() {
         return await axiosInstance.get<ProfessorEvent[]>(
-            `/${this.professorEventEndpoint}/${professorId}`
+            `/${this.professorEventEndpoint}`
         );
     }
 
-    async getById(professorId: number, eventId: number) {
+    async getByProfessorId(professorId: number, eventId: number) {
         return await axiosInstance.get<ProfessorEvent>(
             `/${this.professorEventEndpoint}/${professorId}/${eventId}`
         );
     }
 
-    async insert(professorId: number, professorEventDto: ProfessorEventDto) {
+    async insertByProfessorId(
+        professorId: number,
+        professorEventDto: ProfessorEventDto
+    ) {
         return await axiosInstance.post<ProfessorEvent>(
             `/${this.professorEventEndpoint}/${professorId}`,
             professorEventDto
         );
     }
 
-    async update(
+    async updateByProfessorId(
         professorId: number,
         eventId: number,
         professorEventDto: ProfessorEventDto
@@ -62,7 +65,7 @@ export class ProfessorEventRequest {
         );
     }
 
-    async delete(professorId: number, eventId: number) {
+    async deleteByProfessorId(professorId: number, eventId: number) {
         return await axiosInstance.delete(
             `/${this.professorEventEndpoint}/${professorId}/${eventId}`
         );

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Update Term</title>
+        <script src="../../../dist/authCheckOnLoad.bundle.js"></script>
+        <script defer src="../../../dist/updateTerm.bundle.js"></script>
+    </head>
+    <body>
+        <header></header>
+        <section>
+            <form id="form-term-update">
+                <label id="term-id-label" for="term-id-input">Id:</label>
+                <input id="term-id-input" type="text" />
+                <label id="term-version-label" for="term-version-input"
+                    >Version:</label
+                >
+                <input id="term-version-input" type="text" />
+                <label id="term-title-label" for="term-title-input"
+                    >Title:</label
+                >
+                <input id="term-title-input" type="text" />
+                <label id="term-description-label" for="term-description-input"
+                    >Description:</label
+                >
+                <input id="term-description-input" type="text" />
+                <label id="term-start-date-label" for="term-start-date-input"
+                    >Start Date:</label
+                >
+                <input id="term-start-date-input" type="datetime-local" />
+                <label id="term-end-date-label" for="term-end-date-input"
+                    >End Date:</label
+                >
+                <input id="term-end-date-input" type="datetime-local" />
+                <button id="term-update-button">Update</button>
+            </form>
+            <p id="response-message"></p>
+        </section>
+        <footer></footer>
+    </body>
+</html>

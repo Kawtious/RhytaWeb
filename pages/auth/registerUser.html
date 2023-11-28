@@ -8,30 +8,26 @@
     <body>
         <header></header>
         <section>
-            <form id="form-registration">
-                <label for="form-registration-input-username">Username:</label
-                ><br />
-                <input
-                    type="text"
-                    id="form-registration-input-username"
-                    name="username"
-                /><br />
-                <label for="form-registration-input-email">Email:</label><br />
-                <input
-                    type="text"
-                    id="form-registration-input-email"
-                    name="email"
-                /><br />
-                <label for="form-registration-input-password">Password:</label
-                ><br />
-                <input
-                    type="password"
-                    id="form-registration-input-password"
-                    name="password"
-                /><br />
-                <button id="form-registration-button-register" name="register">
-                    Register
-                </button>
+            <form id="registration-form">
+                <label
+                    id="registration-username-label"
+                    for="registration-username-input"
+                    >Username:</label
+                >
+                <input id="registration-username-input" type="text" />
+                <label
+                    id="registration-email-label"
+                    for="registration-email-input"
+                    >Email:</label
+                >
+                <input id="registration-email-input" type="text" />
+                <label
+                    id="registration-password-label"
+                    for="registration-password-input"
+                    >Password:</label
+                >
+                <input id="registration-password-input" type="password" />
+                <button id="registration-button">Register</button>
             </form>
             <p id="response-message"></p>
         </section>

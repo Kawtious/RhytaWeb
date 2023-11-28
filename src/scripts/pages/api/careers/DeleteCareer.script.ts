@@ -21,36 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import Cookies from 'js-cookie';
+import { CareerRequest } from '../../../../requests/Career.request';
+import { refreshAuthToken } from '../../../../utils/cookies/JwtAuth.util';
 
-import { setAuthToken } from '../../configuration/Axios.configuration';
-import { UserRequest } from '../../requests/User.request';
+const careerRequest = new CareerRequest();
 
-const userRequest = new UserRequest();
+$(async () => {
+    await refreshAuthToken();
 
-export async function resetTokenCookie() {
-    Cookies.remove('jwt-auth-token');
-}
+    $('#career-delete-button').on('click', function (e) {
+        e.preventDefault();
 
-export async function refreshAuthToken() {
-    const token = Cookies.get('jwt-auth-token');
+        const id = $('#career-id-input').val() as string;
 
-    if (token) {
-        await setAuthToken(token);
-    }
-}
-
-export async function authenticate(token: string): Promise<boolean> {
-    Cookies.set('jwt-auth-token', token);
-
-    await setAuthToken(token);
-
-    return userRequest
-        .getFromAuthHeader()
-        .then(() => {
-            return true;
-        })
-        .catch(() => {
-            return false;
-        });
-}
+        careerRequest
+            .delete(parseInt(id))
+            .then((result) => {
+                $('#response-message').text(JSON.stringify(result.data));
+            })
+            .catch((error) => {
+                $('#response-message').text(JSON.stringify(error.response));
+            });
+    });
+});

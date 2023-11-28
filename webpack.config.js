@@ -1,55 +1,37 @@
-/*
- * MIT License
- *
- * Copyright (c) 2023 Kawtious
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        authCheckOnLoad: './src/plugins/AuthCheckOnLoad.plugin.ts',
-        logoutOnLoad: './src/plugins/LogoutOnLoad.plugin.ts',
-        index: './src/views/Index.view.ts',
-        registerUser: './src/views/auth/RegisterUser.view.ts',
-        loginUser: './src/views/auth/LoginUser.view.ts',
-        insertCareer: './src/views/careers/InsertCareer.view.ts',
-        updateCareer: './src/views/careers/UpdateCareer.view.ts',
-        deleteCareer: './src/views/careers/DeleteCareer.view.ts',
-        insertCourse: './src/views/courses/InsertCourse.view.ts',
-        updateCourse: './src/views/courses/UpdateCourse.view.ts',
-        deleteCourse: './src/views/courses/DeleteCourse.view.ts',
-        insertProfessor: './src/views/professors/InsertProfessor.view.ts',
-        updateProfessor: './src/views/professors/UpdateProfessor.view.ts',
-        deleteProfessor: './src/views/professors/DeleteProfessor.view.ts',
+        authCheckOnLoad: './src/scripts/plugins/AuthCheckOnLoad.plugin.ts',
+        logoutOnLoad: './src/scripts/plugins/LogoutOnLoad.plugin.ts',
+        index: './src/scripts/pages/Index.script.ts',
+        home: './src/scripts/pages/Home.script.ts',
+        registerUser: './src/scripts/pages/auth/RegisterUser.script.ts',
+        loginUser: './src/scripts/pages/auth/LoginUser.script.ts',
+        careersMenu: './src/scripts/pages/menus/CareersMenu.script.ts',
+        insertCareer: './src/scripts/pages/api/careers/InsertCareer.script.ts',
+        updateCareer: './src/scripts/pages/api/careers/UpdateCareer.script.ts',
+        deleteCareer: './src/scripts/pages/api/careers/DeleteCareer.script.ts',
+        insertCourse: './src/scripts/pages/api/courses/InsertCourse.script.ts',
+        updateCourse: './src/scripts/pages/api/courses/UpdateCourse.script.ts',
+        deleteCourse: './src/scripts/pages/api/courses/DeleteCourse.script.ts',
+        insertProfessor:
+            './src/scripts/pages/api/professors/InsertProfessor.script.ts',
+        updateProfessor:
+            './src/scripts/pages/api/professors/UpdateProfessor.script.ts',
+        deleteProfessor:
+            './src/scripts/pages/api/professors/DeleteProfessor.script.ts',
         insertProfessorEvent:
-            './src/views/professorEvents/InsertProfessorEvent.view.ts',
+            './src/scripts/pages/api/professorEvents/InsertProfessorEvent.script.ts',
         updateProfessorEvent:
-            './src/views/professorEvents/UpdateProfessorEvent.view.ts',
+            './src/scripts/pages/api/professorEvents/UpdateProfessorEvent.script.ts',
         deleteProfessorEvent:
-            './src/views/professorEvents/DeleteProfessorEvent.view.ts',
-        insertTerm: './src/views/terms/InsertTerm.view.ts',
-        updateTerm: './src/views/terms/UpdateTerm.view.ts',
-        deleteTerm: './src/views/terms/DeleteTerm.view.ts'
+            './src/scripts/pages/api/professorEvents/DeleteProfessorEvent.script.ts',
+        insertTerm: './src/scripts/pages/api/terms/InsertTerm.script.ts',
+        updateTerm: './src/scripts/pages/api/terms/UpdateTerm.script.ts',
+        deleteTerm: './src/scripts/pages/api/terms/DeleteTerm.script.ts'
     },
     module: {
         rules: [
