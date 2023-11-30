@@ -7,55 +7,55 @@ const sitesConfig = [
     {
         filename: 'index.html',
         template: './src/html/index.html',
-        chunks: ['authCheckOnLoad', 'index']
+        scripts: ['authCheckOnLoad', 'index']
     },
     {
         filename: 'home.html',
         template: './src/html/home.html',
-        chunks: ['authCheckOnLoad', 'home']
+        scripts: ['authCheckOnLoad', 'home']
     },
     {
         filename: 'login.html',
         template: './src/html/auth/login.html',
-        chunks: ['login']
+        scripts: ['login']
     },
     {
         filename: 'logout.html',
         template: './src/html/auth/logout.html',
-        chunks: ['logout']
+        scripts: ['logout']
     },
     {
         filename: 'signIn.html',
         template: './src/html/auth/signIn.html',
-        chunks: ['signIn']
+        scripts: ['signIn']
     },
     {
         filename: 'careers.html',
         template: './src/html/menus/careers.html',
-        chunks: ['authCheckOnLoad', 'careersMenu']
+        scripts: ['authCheckOnLoad', 'careersMenu']
     },
     {
         filename: 'courses.html',
         template: './src/html/menus/courses.html',
-        chunks: ['authCheckOnLoad', 'coursesMenu']
+        scripts: ['authCheckOnLoad', 'coursesMenu']
     },
     {
         filename: 'professors.html',
         template: './src/html/menus/professors.html',
-        chunks: ['authCheckOnLoad', 'professorsMenu']
+        scripts: ['authCheckOnLoad', 'professorsMenu']
     },
     {
         filename: 'terms.html',
         template: './src/html/menus/terms.html',
-        chunks: ['authCheckOnLoad', 'termsMenu']
+        scripts: ['authCheckOnLoad', 'termsMenu']
     }
 ];
 
-const entryHtmlPlugins = sitesConfig.map(({ filename, template, chunks }) => {
+const entryHtmlPlugins = sitesConfig.map(({ filename, template, scripts }) => {
     return new HtmlWebpackPlugin({
         filename: filename,
         template: template,
-        chunks: chunks
+        chunks: scripts
     });
 });
 
@@ -86,6 +86,11 @@ module.exports = {
                 test: /\.(ts|js)?$/,
                 exclude: /node_modules/,
                 use: 'ts-loader'
+            },
+            {
+                test: /\.css$/i,
+                exclude: /node_modules/,
+                use: ['style-loader', 'css-loader', 'postcss-loader']
             }
         ]
     },

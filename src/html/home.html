@@ -4,30 +4,78 @@
         <meta charset="UTF-8" />
         <title>Home</title>
     </head>
-    <body>
-        <header></header>
-        <section>
-            <nav>
-                <div id="careers-div">
-                    <h2>Careers</h2>
+    <body class="">
+        <header
+            class="z-40 h-14 px-6 flex border-b border-color-subtle justify-between items-center w-full bg-white fixed"
+        >
+            <div>
+                <button id="home-button" class="px-4 py-2 font-semibold">
+                    Home
+                </button>
+            </div>
+
+            <div id="profile-menu" class="relative">
+                <button
+                    id="profile-button"
+                    class="px-4 py-2 rounded-lg bg-mandy-500 text-white hover:bg-mandy-600 active:bg-mandy-700 disabled:bg-mandy-200 disabled:text-mandy-700"
+                >
+                    Profile
+                </button>
+
+                <div
+                    id="profile-dropdown"
+                    class="hidden z-50 absolute right-0 mt-2 bg-white text-gray-800 p-2 rounded shadow"
+                >
+                    <a
+                        id="profile-logout"
+                        class="block px-4 py-2 hover:bg-gray-200 rounded-lg"
+                    >
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <section class="p-4 pt-20">
+            <nav class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div
+                    id="careers-div"
+                    class="text-white bg-mandy-500 hover:bg-mandy-600 active:bg-mandy-700 disabled:bg-mandy-200 disabled:text-mandy-700 rounded-lg hover:shadow-lg p-4 transition-transform transform hover:scale-105 cursor-pointer border border-color"
+                >
+                    <h2 class="text-xl font-semibold mb-2">Careers</h2>
                     <p id="careers-count"></p>
                     <p id="careers-courses-count"></p>
                 </div>
-                <div id="courses-div">
-                    <h2>Courses</h2>
+
+                <div
+                    id="courses-div"
+                    class="text-white bg-mandy-500 hover:bg-mandy-600 active:bg-mandy-700 disabled:bg-mandy-200 disabled:text-mandy-700 rounded-lg hover:shadow-lg p-4 transition-transform transform hover:scale-105 cursor-pointer border border-color"
+                >
+                    <h2 class="text-xl font-semibold mb-2">Courses</h2>
                     <p id="courses-count"></p>
                 </div>
-                <div id="professors-div">
-                    <h2>Professors</h2>
+
+                <div
+                    id="professors-div"
+                    class="text-white bg-mandy-500 hover:bg-mandy-600 active:bg-mandy-700 disabled:bg-mandy-200 disabled:text-mandy-700 rounded-lg hover:shadow-lg p-4 transition-transform transform hover:scale-105 cursor-pointer border border-color"
+                >
+                    <h2 class="text-xl font-semibold mb-2">Professors</h2>
                     <p id="professors-count"></p>
                     <p id="professor-events-count"></p>
                 </div>
-                <div id="terms-div">
-                    <h2>Terms</h2>
+
+                <div
+                    id="terms-div"
+                    class="text-white bg-mandy-500 hover:bg-mandy-600 active:bg-mandy-700 disabled:bg-mandy-200 disabled:text-mandy-700 rounded-lg hover:shadow-lg p-4 transition-transform transform hover:scale-105 cursor-pointer border border-color"
+                >
+                    <h2 class="text-xl font-semibold mb-2">Terms</h2>
                     <p id="terms-count"></p>
                 </div>
             </nav>
         </section>
-        <footer></footer>
+
+        <footer class="p-4 mt-8 bg-white border-t border-color-subtle">
+            <p class="text-gray-600 text-sm text-center"></p>
+        </footer>
     </body>
 </html>

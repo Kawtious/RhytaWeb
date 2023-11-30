@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import '../css/styles.css';
 import { CareerRequest } from '../requests/Career.request';
 import { CourseRequest } from '../requests/Course.request';
 import { ProfessorRequest } from '../requests/Professor.request';
@@ -68,35 +69,50 @@ $(async () => {
         termsCount.text(`${result.data.length.toString()} Terms`);
     });
 
-    $('#careers-div')
-        .css('cursor', 'pointer')
-        .on('click', async function (e) {
-            e.preventDefault();
+    $('#careers-div').on('click', async function (e) {
+        e.preventDefault();
 
-            window.location.href = PageUrlConstants.CAREERS_MENU;
-        });
+        window.location.href = PageUrlConstants.CAREERS_MENU;
+    });
 
-    $('#courses-div')
-        .css('cursor', 'pointer')
-        .on('click', async function (e) {
-            e.preventDefault();
+    $('#courses-div').on('click', async function (e) {
+        e.preventDefault();
 
-            window.location.href = PageUrlConstants.COURSES_MENU;
-        });
+        window.location.href = PageUrlConstants.COURSES_MENU;
+    });
 
-    $('#professors-div')
-        .css('cursor', 'pointer')
-        .on('click', async function (e) {
-            e.preventDefault();
+    $('#professors-div').on('click', async function (e) {
+        e.preventDefault();
 
-            window.location.href = PageUrlConstants.PROFESSORS_MENU;
-        });
+        window.location.href = PageUrlConstants.PROFESSORS_MENU;
+    });
 
-    $('#terms-div')
-        .css('cursor', 'pointer')
-        .on('click', async function (e) {
-            e.preventDefault();
+    $('#terms-div').on('click', async function (e) {
+        e.preventDefault();
 
-            window.location.href = PageUrlConstants.TERMS_MENU;
-        });
+        window.location.href = PageUrlConstants.TERMS_MENU;
+    });
+
+    $('#home-button').on('click', async function () {
+        window.location.href = PageUrlConstants.HOME;
+    });
+
+    $(document).on('click', async function (e) {
+        const profileMenu = $('#profile-menu');
+        const profileDropdown = $('#profile-dropdown');
+
+        const isClickInsideProfileMenu = Boolean(
+            $(e.target).closest(profileMenu).length
+        );
+        if (!isClickInsideProfileMenu) {
+            profileDropdown.addClass('hidden');
+        }
+    });
+
+    $('#profile-button').on('click', async function () {
+        const profileDropdown = $('#profile-dropdown');
+        profileDropdown.toggleClass('hidden');
+    });
+
+    $('#profile-logout').attr('href', PageUrlConstants.LOGOUT_USER);
 });

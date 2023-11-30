@@ -24,10 +24,15 @@
 import $ from 'jquery';
 import Cookies from 'js-cookie';
 
-import { authenticate } from '../../utils/cookies/JwtAuth.util';
+import {
+    authenticate,
+    refreshAuthToken
+} from '../../utils/cookies/JwtAuth.util';
 import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 $(async () => {
+    await refreshAuthToken();
+
     const token = Cookies.get('jwt-auth-token');
 
     if (!token) {
