@@ -21,16 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-export class PageUrlConstants {
-    public static INDEX: string = '/index.html';
-    public static HOME: string = '/home.html';
 
-    public static LOGIN_USER: string = '/login.html';
-    public static REGISTER_USER: string = '/signIn.html';
-    public static LOGOUT_USER: string = '/logout.html';
+export function hideElement(element: JQuery<HTMLElement>) {
+    element.addClass('hidden');
+}
 
-    public static CAREERS_MENU: string = '/careers.html';
-    public static COURSES_MENU: string = '/courses.html';
-    public static PROFESSORS_MENU: string = '/professors.html';
-    public static TERMS_MENU: string = '/terms.html';
+export function showElement(element: JQuery<HTMLElement>) {
+    element.removeClass('hidden');
 }

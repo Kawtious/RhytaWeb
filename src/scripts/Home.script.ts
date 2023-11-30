@@ -27,8 +27,9 @@ import { CourseRequest } from '../requests/Course.request';
 import { ProfessorRequest } from '../requests/Professor.request';
 import { ProfessorEventRequest } from '../requests/ProfessorEvent.request';
 import { TermRequest } from '../requests/Term.request';
+import { setupHeader } from '../utils/HeaderSetup.util';
+import { PageUrlConstants } from '../utils/PageUrlConstants.util';
 import { refreshAuthToken } from '../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../utils/cookies/PageUrlConstants.util';
 
 const careerRequest = new CareerRequest();
 const courseRequest = new CourseRequest();
@@ -39,80 +40,60 @@ const termRequest = new TermRequest();
 $(async () => {
     await refreshAuthToken();
 
-    careerRequest.getAll().then((result) => {
-        const careersCount = $('#careers-count');
+    await setupHeader();
 
+    const careersCount = $('#careers-count');
+    const coursesCount = $('#courses-count');
+    const professorsCount = $('#professors-count');
+    const professorEventsCount = $('#professor-events-count');
+    const termsCount = $('#terms-count');
+
+    const careersDiv = $('#careers-div');
+    const coursesDiv = $('#courses-div');
+    const professorsDiv = $('#professors-div');
+    const termsDiv = $('#terms-div');
+
+    careerRequest.getAll().then((result) => {
         careersCount.text(`${result.data.length.toString()} Careers`);
     });
 
     courseRequest.getAll().then((result) => {
-        const coursesCount = $('#courses-count');
-
         coursesCount.text(`${result.data.length.toString()} Courses`);
     });
 
     professorRequest.getAll().then((result) => {
-        const professorsCount = $('#professors-count');
-
         professorsCount.text(`${result.data.length.toString()} Professors`);
     });
 
     professorEventRequest.getAll().then((result) => {
-        const professorEventsCount = $('#professor-events-count');
-
         professorEventsCount.text(`${result.data.length.toString()} Events`);
     });
 
     termRequest.getAll().then((result) => {
-        const termsCount = $('#terms-count');
-
         termsCount.text(`${result.data.length.toString()} Terms`);
     });
 
-    $('#careers-div').on('click', async function (e) {
+    careersDiv.on('click', async function (e) {
         e.preventDefault();
 
         window.location.href = PageUrlConstants.CAREERS_MENU;
     });
 
-    $('#courses-div').on('click', async function (e) {
+    coursesDiv.on('click', async function (e) {
         e.preventDefault();
 
         window.location.href = PageUrlConstants.COURSES_MENU;
     });
 
-    $('#professors-div').on('click', async function (e) {
+    professorsDiv.on('click', async function (e) {
         e.preventDefault();
 
         window.location.href = PageUrlConstants.PROFESSORS_MENU;
     });
 
-    $('#terms-div').on('click', async function (e) {
+    termsDiv.on('click', async function (e) {
         e.preventDefault();
 
         window.location.href = PageUrlConstants.TERMS_MENU;
     });
-
-    $('#home-button').on('click', async function () {
-        window.location.href = PageUrlConstants.HOME;
-    });
-
-    $(document).on('click', async function (e) {
-        const profileMenu = $('#profile-menu');
-        const profileDropdown = $('#profile-dropdown');
-
-        const isClickInsideProfileMenu = Boolean(
-            $(e.target).closest(profileMenu).length
-        );
-        if (!isClickInsideProfileMenu) {
-            profileDropdown.addClass('hidden');
-        }
-    });
-
-    $('#profile-button').on('click', async function () {
-        const profileDropdown = $('#profile-dropdown');
-        profileDropdown.toggleClass('hidden');
-    });
-
-    $('#profile-logout').attr('href', PageUrlConstants.LOGOUT_USER);
 });

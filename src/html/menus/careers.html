@@ -5,72 +5,166 @@
         <title>Careers</title>
     </head>
     <body>
-        <header>
-            <a id="home-button">Home</a>
+        <header
+            class="z-40 h-14 px-6 flex border-b border-color-subtle justify-between items-center w-full bg-white fixed"
+        >
+            <div>
+                <button id="home-button" class="px-4 py-2 font-semibold">
+                    Home
+                </button>
+            </div>
+
+            <div id="profile-menu" class="relative">
+                <button id="profile-button" class="px-4 py-2 mandy-button">
+                    Profile
+                </button>
+
+                <div
+                    id="profile-dropdown"
+                    class="hidden z-50 absolute right-0 mt-2 bg-white text-gray-800 p-2 rounded shadow"
+                >
+                    <a
+                        id="profile-logout"
+                        class="block px-4 py-2 hover:bg-gray-200 rounded-lg"
+                    >
+                        Logout
+                    </a>
+                </div>
+            </div>
         </header>
-        <section>
-            <table id="careers-table">
-                <tr id="careers-table-headers-row">
-                    <th id="careers-table-id-header">ID</th>
-                    <th id="careers-table-created-date-header">Created Date</th>
-                    <th id="careers-table-updated-date-header">Updated Date</th>
-                    <th id="careers-table-version-header">Version</th>
-                    <th id="careers-table-name-header">Name</th>
-                    <th id="careers-table-description-header">Description</th>
-                </tr>
-            </table>
+
+        <section class="container mx-auto p-4 pt-20">
+            <div class="flex">
+                <div
+                    class="w-full min-h-screen h-auto border px-6 py-3 rounded-2xl"
+                >
+                    <table
+                        id="careers-table"
+                        class="w-full justify-center text-center"
+                    >
+                        <tr id="careers-table-headers-row">
+                            <th id="careers-table-id-header">ID</th>
+                            <th id="careers-table-created-date-header">
+                                Created Date
+                            </th>
+                            <th id="careers-table-updated-date-header">
+                                Updated Date
+                            </th>
+                            <th id="careers-table-version-header">Version</th>
+                            <th id="careers-table-name-header">Name</th>
+                            <th id="careers-table-description-header">
+                                Description
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div
+                    id="forms-container"
+                    class="w-1/3 border px-6 py-3 rounded-2xl"
+                >
+                    <section
+                        id="career-insert-section"
+                        class="px-4 py-6 rounded-2xl max-w-md w-full"
+                    >
+                        <form id="career-insert-form">
+                            <div class="mb-4">
+                                <label
+                                    for="career-insert-name-input"
+                                    class="font-semibold text-sm"
+                                    >Name</label
+                                >
+                                <input
+                                    id="career-insert-name-input"
+                                    type="text"
+                                    autocomplete="off"
+                                    class="border px-6 py-3 w-full mandy-input-field"
+                                />
+                            </div>
+
+                            <div class="mb-4">
+                                <label
+                                    for="career-insert-description-input"
+                                    class="font-semibold text-sm"
+                                    >Description</label
+                                >
+                                <input
+                                    id="career-insert-description-input"
+                                    type="text"
+                                    autocomplete="off"
+                                    class="border px-6 py-3 w-full mandy-input-field"
+                                />
+                            </div>
+
+                            <div class="mb-4">
+                                <button
+                                    id="career-insert-button"
+                                    class="mandy-button px-6 py-3 w-full"
+                                >
+                                    Insert
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <section
+                        id="career-update-delete-section"
+                        class="hidden px-4 py-6 flex-col rounded-2xl max-w-md w-full justify-center items-center"
+                    >
+                        <form id="career-update-form">
+                            <div class="mb-4">
+                                <label
+                                    for="career-update-name-input"
+                                    class="font-semibold text-sm"
+                                    >Name</label
+                                >
+                                <input
+                                    id="career-update-name-input"
+                                    type="text"
+                                    autocomplete="off"
+                                    class="border px-6 py-3 w-full mandy-input-field"
+                                />
+                            </div>
+
+                            <div class="mb-4">
+                                <label
+                                    for="career-update-description-input"
+                                    class="font-semibold text-sm"
+                                    >Description</label
+                                >
+                                <input
+                                    id="career-update-description-input"
+                                    type="text"
+                                    autocomplete="off"
+                                    class="border px-6 py-3 w-full mandy-input-field"
+                                />
+                            </div>
+
+                            <div class="mb-4">
+                                <button
+                                    id="career-update-button"
+                                    class="mandy-button px-6 py-3 w-full"
+                                >
+                                    Update
+                                </button>
+                            </div>
+
+                            <div class="mb-4">
+                                <button
+                                    id="career-delete-button"
+                                    class="mandy-button px-6 py-3 w-full"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
         </section>
-        <section class="hidden">
-            <form id="career-insert-form">
-                <label
-                    id="career-insert-name-label"
-                    for="career-insert-name-input"
-                    >Name:</label
-                >
-                <input
-                    id="career-insert-name-input"
-                    type="text"
-                    autocomplete="off"
-                />
-                <label
-                    id="career-insert-description-label"
-                    for="career-insert-description-input"
-                    >Description:</label
-                >
-                <input
-                    id="career-insert-description-input"
-                    type="text"
-                    autocomplete="off"
-                />
-                <button id="career-insert-button">Insert</button>
-            </form>
-        </section>
-        <section class="hidden">
-            <form id="career-update-form">
-                <label
-                    id="career-update-name-label"
-                    for="career-update-name-input"
-                    >Name:</label
-                >
-                <input
-                    id="career-update-name-input"
-                    type="text"
-                    autocomplete="off"
-                />
-                <label
-                    id="career-update-description-label"
-                    for="career-update-description-input"
-                    >Description:</label
-                >
-                <input
-                    id="career-update-description-input"
-                    type="text"
-                    autocomplete="off"
-                />
-                <button id="career-update-button">Update</button>
-                <button id="career-delete-button">Delete</button>
-            </form>
-        </section>
-        <footer></footer>
+
+        <footer class="p-4 mt-8 bg-white border-t border-color-subtle">
+            <p class="text-gray-600 text-sm text-center"></p>
+        </footer>
     </body>
 </html>

@@ -21,32 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import $ from 'jquery';
-import Cookies from 'js-cookie';
+export class PageUrlConstants {
+    public static INDEX: string = '/index.html';
+    public static HOME: string = '/home.html';
 
-import { PageUrlConstants } from '../../utils/PageUrlConstants.util';
-import {
-    authenticate,
-    refreshAuthToken
-} from '../../utils/cookies/JwtAuth.util';
+    public static LOGIN: string = '/login.html';
+    public static SIGNIN: string = '/signIn.html';
+    public static LOGOUT: string = '/logout.html';
 
-$(async () => {
-    await refreshAuthToken();
-
-    const token = Cookies.get('jwt-auth-token');
-
-    if (!token) {
-        window.location.replace(PageUrlConstants.LOGIN);
-        return;
-    }
-
-    authenticate(token)
-        .then((result) => {
-            if (!result) {
-                window.location.replace(PageUrlConstants.LOGIN);
-            }
-        })
-        .catch(() => {
-            window.location.replace(PageUrlConstants.LOGIN);
-        });
-});
+    public static CAREERS_MENU: string = '/careers.html';
+    public static COURSES_MENU: string = '/courses.html';
+    public static PROFESSORS_MENU: string = '/professors.html';
+    public static TERMS_MENU: string = '/terms.html';
+}

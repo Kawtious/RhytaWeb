@@ -21,12 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import { CareerDto } from '../../dto/Career.dto';
+import '../../css/styles.css';
 import { CourseDto } from '../../dto/Course.dto';
 import { Course } from '../../entities/Course.entity';
 import { CourseRequest } from '../../requests/Course.request';
+import { hideElement, showElement } from '../../utils/ElementVisibility.util';
+import { setupHeader } from '../../utils/HeaderSetup.util';
 import { refreshAuthToken } from '../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 const courseRequest = new CourseRequest();
 
@@ -39,23 +40,30 @@ async function refreshCoursesList() {
         // Store headers row before removing it
         const coursesTableHeadersRow = $('#courses-table-headers-row');
 
+        const courseInsertSection = $('#course-insert-section');
+        const courseUpdateDeleteSection = $('#course-update-delete-section');
+
+        const courseUpdateNameInput = $('#course-update-name-input');
+        const courseUpdateDescriptionInput = $(
+            '#course-update-description-input'
+        );
+        const courseUpdateCareerIdInput = $('#course-update-career-id-input');
+
         coursesTable.html('');
 
         coursesTable.append(coursesTableHeadersRow);
 
         for (const course of result.data) {
             const courseRow = document.createElement('tr');
-            courseRow.style.cursor = 'pointer';
-            courseRow.onclick = async function () {
-                const courseUpdateNameInput = $('#course-update-name-input');
-                const courseUpdateDescriptionInput = $(
-                    '#course-update-description-input'
-                );
-                const courseUpdateCareerIdInput = $(
-                    '#course-update-career-id-input'
-                );
+            courseRow.classList.add('table-row');
 
+            courseRow.onclick = async function () {
                 if (selectedCourse == course) {
+                    courseRow.classList.remove('table-row-selected');
+
+                    showElement(courseInsertSection);
+                    hideElement(courseUpdateDeleteSection);
+
                     selectedCourse = null;
                     courseUpdateNameInput.val('');
                     courseUpdateDescriptionInput.val('');
@@ -63,6 +71,13 @@ async function refreshCoursesList() {
 
                     return;
                 }
+
+                $('.table-row-selected').removeClass('table-row-selected');
+
+                courseRow.classList.add('table-row-selected');
+
+                showElement(courseUpdateDeleteSection);
+                hideElement(courseInsertSection);
 
                 selectedCourse = course;
                 courseUpdateNameInput.val(course.name);
@@ -109,16 +124,31 @@ $(async () => {
 
     await refreshCoursesList();
 
-    $('#home-button').attr('href', PageUrlConstants.HOME);
+    await setupHeader();
 
-    $('#course-insert-button').on('click', async function (e) {
+    const courseInsertSection = $('#course-insert-section');
+    const courseUpdateDeleteSection = $('#course-update-delete-section');
+
+    const courseInsertButton = $('#course-insert-button');
+    const courseUpdateButton = $('#course-update-button');
+    const courseDeleteButton = $('#course-delete-button');
+
+    const courseInsertNameInput = $('#course-insert-name-input');
+    const courseInsertDescriptionInput = $('#course-insert-description-input');
+    const courseInsertCareerIdInput = $('#course-insert-career-id-input');
+
+    const courseUpdateNameInput = $('#course-update-name-input');
+    const courseUpdateDescriptionInput = $('#course-update-description-input');
+    const courseUpdateCareerIdInput = $('#course-update-career-id-input');
+
+    const responseMessage = $('#response-message');
+
+    courseInsertButton.on('click', async function (e) {
         e.preventDefault();
 
-        const name = $('#course-insert-name-input').val() as string;
-        const description = $(
-            '#course-insert-description-input'
-        ).val() as string;
-        const careerId = $('#course-insert-career-id-input').val() as string;
+        const name = courseInsertNameInput.val() as string;
+        const description = courseInsertDescriptionInput.val() as string;
+        const careerId = courseInsertCareerIdInput.val() as string;
 
         const courseDto: CourseDto = {
             name: name,
@@ -129,20 +159,20 @@ $(async () => {
         courseRequest
             .insert(courseDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
 
-                $('#course-insert-name-input').val('');
-                $('#course-insert-description-input').val('');
-                $('#course-insert-career-id-input').val('');
+                courseInsertNameInput.val('');
+                courseInsertDescriptionInput.val('');
+                courseInsertCareerIdInput.val('');
 
                 return refreshCoursesList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#course-update-button').on('click', async function (e) {
+    courseUpdateButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedCourse) {
@@ -151,11 +181,9 @@ $(async () => {
 
         const id = selectedCourse.id;
         const version = selectedCourse.version;
-        const name = $('#course-update-name-input').val() as string;
-        const description = $(
-            '#course-update-description-input'
-        ).val() as string;
-        const careerId = $('#course-update-career-id-input').val() as string;
+        const name = courseUpdateNameInput.val() as string;
+        const description = courseUpdateDescriptionInput.val() as string;
+        const careerId = courseUpdateCareerIdInput.val() as string;
 
         const courseDto: CourseDto = {
             version: version,
@@ -167,21 +195,24 @@ $(async () => {
         courseRequest
             .update(id, courseDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
+
+                showElement(courseInsertSection);
+                hideElement(courseUpdateDeleteSection);
 
                 selectedCourse = null;
-                $('#course-update-name-input').val('');
-                $('#course-update-description-input').val('');
-                $('#course-update-career-id-input').val('');
+                courseUpdateNameInput.val('');
+                courseUpdateDescriptionInput.val('');
+                courseUpdateCareerIdInput.val('');
 
                 return refreshCoursesList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#course-delete-button').on('click', async function (e) {
+    courseDeleteButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedCourse) {
@@ -193,17 +224,20 @@ $(async () => {
         courseRequest
             .delete(id)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
+
+                showElement(courseInsertSection);
+                hideElement(courseUpdateDeleteSection);
 
                 selectedCourse = null;
-                $('#course-update-name-input').val('');
-                $('#course-update-description-input').val('');
-                $('#course-update-career-id-input').val('');
+                courseUpdateNameInput.val('');
+                courseUpdateDescriptionInput.val('');
+                courseUpdateCareerIdInput.val('');
 
                 return refreshCoursesList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 });

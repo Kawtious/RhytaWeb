@@ -21,14 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import '../../css/styles.css';
 import { ProfessorDto } from '../../dto/Professor.dto';
 import { ProfessorEventDto } from '../../dto/ProfessorEvent.dto';
 import { Professor } from '../../entities/Professor.entity';
 import { ProfessorEvent } from '../../entities/ProfessorEvent.entity';
 import { ProfessorRequest } from '../../requests/Professor.request';
 import { ProfessorEventRequest } from '../../requests/ProfessorEvent.request';
+import { hideElement, showElement } from '../../utils/ElementVisibility.util';
+import { setupHeader } from '../../utils/HeaderSetup.util';
 import { refreshAuthToken } from '../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 const professorRequest = new ProfessorRequest();
 const professorEventRequest = new ProfessorEventRequest();
@@ -37,38 +39,81 @@ let selectedProfessor: Professor | null;
 let selectedProfessorEvent: ProfessorEvent | null;
 
 async function refreshProfessorsList() {
+    const professorsTable = $('#professors-table');
+    const professorEventsTable = $('#professor-events-table');
+
+    // Store headers row before removing it
+    const professorsTableHeadersRow = $('#professors-table-headers-row');
+    const professorEventsTableHeadersRow = $(
+        '#professor-events-table-headers-row'
+    );
+
+    const professorInsertSection = $('#professor-insert-section');
+    const professorUpdateDeleteSection = $('#professor-update-delete-section');
+
+    const professorEventInsertSection = $('#professor-event-insert-section');
+    const professorEventUpdateDeleteSection = $(
+        '#professor-event-update-delete-section'
+    );
+
+    const professorInsertFirstNameInput = $(
+        '#professor-insert-first-name-input'
+    );
+    const professorInsertLastNameInput = $('#professor-insert-last-name-input');
+
+    const professorUpdateFirstNameInput = $(
+        '#professor-update-first-name-input'
+    );
+    const professorUpdateLastNameInput = $('#professor-update-last-name-input');
+
+    const professorEventInsertTitleInput = $(
+        '#professor-event-insert-title-input'
+    );
+    const professorEventInsertDescriptionInput = $(
+        '#professor-event-insert-description-input'
+    );
+    const professorEventInsertStartDateInput = $(
+        '#professor-event-insert-start-date-input'
+    );
+    const professorEventInsertEndDateInput = $(
+        '#professor-event-insert-end-date-input'
+    );
+
+    const professorEventUpdateTitleInput = $(
+        '#professor-event-update-title-input'
+    );
+    const professorEventUpdateDescriptionInput = $(
+        '#professor-event-update-description-input'
+    );
+    const professorEventUpdateStartDateInput = $(
+        '#professor-event-update-start-date-input'
+    );
+    const professorEventUpdateEndDateInput = $(
+        '#professor-event-update-end-date-input'
+    );
+
     professorRequest.getAll().then((result) => {
-        const professorsTable = $('#professors-table');
-
-        // Store headers row before removing it
-        const professorsTableHeadersRow = $('#professors-table-headers-row');
-
         professorsTable.html('');
+        professorEventsTable.html('');
 
         professorsTable.append(professorsTableHeadersRow);
+        professorEventsTable.append(professorEventsTableHeadersRow);
 
         for (const professor of result.data) {
             const professorRow = document.createElement('tr');
-            professorRow.style.cursor = 'pointer';
+            professorRow.classList.add('table-row');
+
             professorRow.onclick = async function () {
-                selectedProfessorEvent = null;
-                $('#professor-event-insert-title-input').val('');
-                $('#professor-event-insert-description-input').val('');
-                $('#professor-event-insert-start-date-input').val('');
-                $('#professor-event-insert-end-date-input').val('');
-                $('#professor-event-update-title-input').val('');
-                $('#professor-event-update-description-input').val('');
-                $('#professor-event-update-start-date-input').val('');
-                $('#professor-event-update-end-date-input').val('');
-
-                const professorUpdateFirstNameInput = $(
-                    '#professor-update-first-name-input'
-                );
-                const professorUpdateLastNameInput = $(
-                    '#professor-update-last-name-input'
-                );
-
                 if (selectedProfessor == professor) {
+                    professorRow.classList.remove('table-row-selected');
+
+                    showElement(professorsTable);
+                    showElement(professorInsertSection);
+                    hideElement(professorUpdateDeleteSection);
+                    hideElement(professorEventsTable);
+                    hideElement(professorEventInsertSection);
+                    hideElement(professorEventUpdateDeleteSection);
+
                     selectedProfessor = null;
                     professorUpdateFirstNameInput.val('');
                     professorUpdateLastNameInput.val('');
@@ -77,6 +122,29 @@ async function refreshProfessorsList() {
 
                     return;
                 }
+
+                $('.table-row-selected').removeClass('table-row-selected');
+
+                professorRow.classList.add('table-row-selected');
+
+                showElement(professorUpdateDeleteSection);
+                showElement(professorEventsTable);
+                showElement(professorEventInsertSection);
+                hideElement(professorsTable);
+                hideElement(professorInsertSection);
+
+                professorInsertFirstNameInput.val('');
+                professorInsertLastNameInput.val('');
+
+                selectedProfessorEvent = null;
+                professorEventInsertTitleInput.val('');
+                professorEventInsertDescriptionInput.val('');
+                professorEventInsertStartDateInput.val('');
+                professorEventInsertEndDateInput.val('');
+                professorEventUpdateTitleInput.val('');
+                professorEventUpdateDescriptionInput.val('');
+                professorEventUpdateStartDateInput.val('');
+                professorEventUpdateEndDateInput.val('');
 
                 selectedProfessor = professor;
                 professorUpdateFirstNameInput.val(professor.firstName);
@@ -125,6 +193,24 @@ async function refreshProfessorEventsList() {
         '#professor-events-table-headers-row'
     );
 
+    const professorEventInsertSection = $('#professor-event-insert-section');
+    const professorEventUpdateDeleteSection = $(
+        '#professor-event-update-delete-section'
+    );
+
+    const professorEventUpdateTitleInput = $(
+        '#professor-event-update-title-input'
+    );
+    const professorEventUpdateDescriptionInput = $(
+        '#professor-event-update-description-input'
+    );
+    const professorEventUpdateStartDateInput = $(
+        '#professor-event-update-start-date-input'
+    );
+    const professorEventUpdateEndDateInput = $(
+        '#professor-event-update-end-date-input'
+    );
+
     professorEventsTable.html('');
 
     professorEventsTable.append(professorEventsTableHeadersRow);
@@ -138,22 +224,14 @@ async function refreshProfessorEventsList() {
     professorEventRequest.getAllByProfessorId(professorId).then((result) => {
         for (const professorEvent of result.data) {
             const professorEventRow = document.createElement('tr');
-            professorEventRow.style.cursor = 'pointer';
-            professorEventRow.onclick = async function () {
-                const professorEventUpdateTitleInput = $(
-                    '#professor-event-update-title-input'
-                );
-                const professorEventUpdateDescriptionInput = $(
-                    '#professor-event-update-description-input'
-                );
-                const professorEventUpdateStartDateInput = $(
-                    '#professor-event-update-start-date-input'
-                );
-                const professorEventUpdateEndDateInput = $(
-                    '#professor-event-update-end-date-input'
-                );
 
+            professorEventRow.onclick = async function () {
                 if (selectedProfessorEvent == professorEvent) {
+                    professorEventRow.classList.remove('table-row-selected');
+
+                    showElement(professorEventInsertSection);
+                    hideElement(professorEventUpdateDeleteSection);
+
                     selectedProfessorEvent = null;
                     professorEventUpdateTitleInput.val('');
                     professorEventUpdateDescriptionInput.val('');
@@ -162,6 +240,13 @@ async function refreshProfessorEventsList() {
 
                     return;
                 }
+
+                $('.table-row-selected').removeClass('table-row-selected');
+
+                professorEventRow.classList.add('table-row-selected');
+
+                showElement(professorEventUpdateDeleteSection);
+                hideElement(professorEventInsertSection);
 
                 selectedProfessorEvent = professorEvent;
                 professorEventUpdateTitleInput.val(professorEvent.title);
@@ -232,15 +317,70 @@ $(async () => {
 
     await refreshProfessorEventsList();
 
-    $('#home-button').attr('href', PageUrlConstants.HOME);
+    await setupHeader();
 
-    $('#professor-insert-button').on('click', async function (e) {
+    const professorsTable = $('#professors-table');
+    const professorEventsTable = $('#professor-events-table');
+
+    const professorInsertSection = $('#professor-insert-section');
+    const professorUpdateDeleteSection = $('#professor-update-delete-section');
+
+    const professorEventInsertSection = $('#professor-event-insert-section');
+    const professorEventUpdateDeleteSection = $(
+        '#professor-event-update-delete-section'
+    );
+
+    const professorInsertButton = $('#professor-insert-button');
+    const professorUpdateButton = $('#professor-update-button');
+    const professorDeleteButton = $('#professor-delete-button');
+
+    const professorEventInsertButton = $('#professor-event-insert-button');
+    const professorEventUpdateButton = $('#professor-event-update-button');
+    const professorEventDeleteButton = $('#professor-event-delete-button');
+
+    const professorInsertFirstNameInput = $(
+        '#professor-insert-first-name-input'
+    );
+    const professorInsertLastNameInput = $('#professor-insert-last-name-input');
+
+    const professorUpdateFirstNameInput = $(
+        '#professor-update-first-name-input'
+    );
+    const professorUpdateLastNameInput = $('#professor-update-last-name-input');
+
+    const professorEventInsertTitleInput = $(
+        '#professor-event-insert-title-input'
+    );
+    const professorEventInsertDescriptionInput = $(
+        '#professor-event-insert-description-input'
+    );
+    const professorEventInsertStartDateInput = $(
+        '#professor-event-insert-start-date-input'
+    );
+    const professorEventInsertEndDateInput = $(
+        '#professor-event-insert-end-date-input'
+    );
+
+    const professorEventUpdateTitleInput = $(
+        '#professor-event-update-title-input'
+    );
+    const professorEventUpdateDescriptionInput = $(
+        '#professor-event-update-description-input'
+    );
+    const professorEventUpdateStartDateInput = $(
+        '#professor-event-update-start-date-input'
+    );
+    const professorEventUpdateEndDateInput = $(
+        '#professor-event-update-end-date-input'
+    );
+
+    const responseMessage = $('#response-message');
+
+    professorInsertButton.on('click', async function (e) {
         e.preventDefault();
 
-        const firstName = $(
-            '#professor-insert-first-name-input'
-        ).val() as string;
-        const lastName = $('#professor-insert-last-name-input').val() as string;
+        const firstName = professorInsertFirstNameInput.val() as string;
+        const lastName = professorInsertLastNameInput.val() as string;
 
         const professorDto: ProfessorDto = {
             firstName: firstName,
@@ -250,19 +390,19 @@ $(async () => {
         professorRequest
             .insert(professorDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
 
-                $('#professor-insert-first-name-input').val('');
-                $('#professor-insert-last-name-input').val('');
+                professorInsertFirstNameInput.val('');
+                professorInsertLastNameInput.val('');
 
                 return refreshProfessorsList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#professor-update-button').on('click', async function (e) {
+    professorUpdateButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedProfessor) {
@@ -271,10 +411,8 @@ $(async () => {
 
         const id = selectedProfessor.id;
         const version = selectedProfessor.version;
-        const firstName = $(
-            '#professor-update-first-name-input'
-        ).val() as string;
-        const lastName = $('#professor-update-last-name-input').val() as string;
+        const firstName = professorUpdateFirstNameInput.val() as string;
+        const lastName = professorUpdateLastNameInput.val() as string;
 
         const professorDto: ProfessorDto = {
             version: version,
@@ -285,20 +423,27 @@ $(async () => {
         professorRequest
             .update(id, professorDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
+
+                showElement(professorsTable);
+                showElement(professorInsertSection);
+                hideElement(professorUpdateDeleteSection);
+                hideElement(professorEventsTable);
+                hideElement(professorEventInsertSection);
+                hideElement(professorEventUpdateDeleteSection);
 
                 selectedProfessor = null;
-                $('#professor-update-first-name-input').val('');
-                $('#professor-update-last-name-input').val('');
+                professorUpdateFirstNameInput.val('');
+                professorUpdateLastNameInput.val('');
 
                 return refreshProfessorsList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#professor-delete-button').on('click', async function (e) {
+    professorDeleteButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedProfessor) {
@@ -310,20 +455,27 @@ $(async () => {
         professorRequest
             .delete(id)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
+
+                showElement(professorsTable);
+                showElement(professorInsertSection);
+                hideElement(professorUpdateDeleteSection);
+                hideElement(professorEventsTable);
+                hideElement(professorEventInsertSection);
+                hideElement(professorEventUpdateDeleteSection);
 
                 selectedProfessor = null;
-                $('#professor-update-first-name-input').val('');
-                $('#professor-update-last-name-input').val('');
+                professorUpdateFirstNameInput.val('');
+                professorUpdateLastNameInput.val('');
 
                 return refreshProfessorsList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#professor-event-insert-button').on('click', async function (e) {
+    professorEventInsertButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedProfessor) {
@@ -331,16 +483,11 @@ $(async () => {
         }
 
         const professorId = selectedProfessor.id;
-        const title = $('#professor-event-insert-title-input').val() as string;
-        const description = $(
-            '#professor-event-insert-description-input'
-        ).val() as string;
-        const startDate = $(
-            '#professor-event-insert-start-date-input'
-        ).val() as string;
-        const endDate = $(
-            '#professor-event-insert-end-date-input'
-        ).val() as string;
+        const title = professorEventInsertTitleInput.val() as string;
+        const description =
+            professorEventInsertDescriptionInput.val() as string;
+        const startDate = professorEventInsertStartDateInput.val() as string;
+        const endDate = professorEventInsertEndDateInput.val() as string;
 
         const professorEventDto: ProfessorEventDto = {
             title: title,
@@ -352,21 +499,21 @@ $(async () => {
         professorEventRequest
             .insertByProfessorId(professorId, professorEventDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
 
-                $('#professor-event-insert-title-input').val('');
-                $('#professor-event-insert-description-input').val('');
-                $('#professor-event-insert-start-date-input').val('');
-                $('#professor-event-insert-end-date-input').val('');
+                professorEventInsertTitleInput.val('');
+                professorEventInsertDescriptionInput.val('');
+                professorEventInsertStartDateInput.val('');
+                professorEventInsertEndDateInput.val('');
 
                 return refreshProfessorEventsList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#professor-event-update-button').on('click', async function (e) {
+    professorEventUpdateButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedProfessor) {
@@ -380,16 +527,11 @@ $(async () => {
         const professorId = selectedProfessor.id;
         const eventId = selectedProfessorEvent.id;
         const version = selectedProfessorEvent.version;
-        const title = $('#professor-event-update-title-input').val() as string;
-        const description = $(
-            '#professor-event-update-description-input'
-        ).val() as string;
-        const startDate = $(
-            '#professor-event-update-start-date-input'
-        ).val() as string;
-        const endDate = $(
-            '#professor-event-update-end-date-input'
-        ).val() as string;
+        const title = professorEventUpdateTitleInput.val() as string;
+        const description =
+            professorEventUpdateDescriptionInput.val() as string;
+        const startDate = professorEventUpdateStartDateInput.val() as string;
+        const endDate = professorEventUpdateEndDateInput.val() as string;
 
         const professorEventDto: ProfessorEventDto = {
             version: version,
@@ -402,22 +544,25 @@ $(async () => {
         professorEventRequest
             .updateByProfessorId(professorId, eventId, professorEventDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
+
+                showElement(professorEventInsertSection);
+                hideElement(professorEventUpdateDeleteSection);
 
                 selectedProfessorEvent = null;
-                $('#professor-event-update-title-input').val('');
-                $('#professor-event-update-description-input').val('');
-                $('#professor-event-update-start-date-input').val('');
-                $('#professor-event-update-end-date-input').val('');
+                professorEventUpdateTitleInput.val('');
+                professorEventUpdateDescriptionInput.val('');
+                professorEventUpdateStartDateInput.val('');
+                professorEventUpdateEndDateInput.val('');
 
                 return refreshProfessorEventsList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#professor-event-delete-button').on('click', async function (e) {
+    professorEventDeleteButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedProfessor) {
@@ -434,18 +579,21 @@ $(async () => {
         professorEventRequest
             .deleteByProfessorId(professorId, eventId)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
+
+                showElement(professorEventInsertSection);
+                hideElement(professorEventUpdateDeleteSection);
 
                 selectedProfessorEvent = null;
-                $('#professor-event-update-title-input').val('');
-                $('#professor-event-update-description-input').val('');
-                $('#professor-event-update-start-date-input').val('');
-                $('#professor-event-update-end-date-input').val('');
+                professorEventUpdateTitleInput.val('');
+                professorEventUpdateDescriptionInput.val('');
+                professorEventUpdateStartDateInput.val('');
+                professorEventUpdateEndDateInput.val('');
 
                 return refreshProfessorEventsList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 });

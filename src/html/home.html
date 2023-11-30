@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>Home</title>
     </head>
-    <body class="">
+    <body>
         <header
             class="z-40 h-14 px-6 flex border-b border-color-subtle justify-between items-center w-full bg-white fixed"
         >
@@ -15,10 +15,7 @@
             </div>
 
             <div id="profile-menu" class="relative">
-                <button
-                    id="profile-button"
-                    class="px-4 py-2 rounded-lg bg-mandy-500 text-white hover:bg-mandy-600 active:bg-mandy-700 disabled:bg-mandy-200 disabled:text-mandy-700"
-                >
+                <button id="profile-button" class="px-4 py-2 mandy-button">
                     Profile
                 </button>
 
@@ -38,36 +35,24 @@
 
         <section class="p-4 pt-20">
             <nav class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div
-                    id="careers-div"
-                    class="text-white bg-mandy-500 hover:bg-mandy-600 active:bg-mandy-700 disabled:bg-mandy-200 disabled:text-mandy-700 rounded-lg hover:shadow-lg p-4 transition-transform transform hover:scale-105 cursor-pointer border border-color"
-                >
+                <div id="careers-div" class="home-card">
                     <h2 class="text-xl font-semibold mb-2">Careers</h2>
                     <p id="careers-count"></p>
                     <p id="careers-courses-count"></p>
                 </div>
 
-                <div
-                    id="courses-div"
-                    class="text-white bg-mandy-500 hover:bg-mandy-600 active:bg-mandy-700 disabled:bg-mandy-200 disabled:text-mandy-700 rounded-lg hover:shadow-lg p-4 transition-transform transform hover:scale-105 cursor-pointer border border-color"
-                >
+                <div id="courses-div" class="home-card">
                     <h2 class="text-xl font-semibold mb-2">Courses</h2>
                     <p id="courses-count"></p>
                 </div>
 
-                <div
-                    id="professors-div"
-                    class="text-white bg-mandy-500 hover:bg-mandy-600 active:bg-mandy-700 disabled:bg-mandy-200 disabled:text-mandy-700 rounded-lg hover:shadow-lg p-4 transition-transform transform hover:scale-105 cursor-pointer border border-color"
-                >
+                <div id="professors-div" class="home-card">
                     <h2 class="text-xl font-semibold mb-2">Professors</h2>
                     <p id="professors-count"></p>
                     <p id="professor-events-count"></p>
                 </div>
 
-                <div
-                    id="terms-div"
-                    class="text-white bg-mandy-500 hover:bg-mandy-600 active:bg-mandy-700 disabled:bg-mandy-200 disabled:text-mandy-700 rounded-lg hover:shadow-lg p-4 transition-transform transform hover:scale-105 cursor-pointer border border-color"
-                >
+                <div id="terms-div" class="home-card">
                     <h2 class="text-xl font-semibold mb-2">Terms</h2>
                     <p id="terms-count"></p>
                 </div>

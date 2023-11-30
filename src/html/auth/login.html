@@ -4,22 +4,49 @@
         <meta charset="UTF-8" />
         <title>Login</title>
     </head>
-    <body>
-        <header></header>
-        <section>
-            <form id="login-form">
-                <label id="login-identifier-label" for="login-identifier-input"
-                    >Username:</label
-                >
-                <input id="login-identifier-input" type="text" />
-                <label id="login-password-label" for="login-password-input"
-                    >Password:</label
-                >
-                <input id="login-password-input" type="password" />
-                <button id="login-button">Login</button>
-            </form>
-            <p id="response-message"></p>
+    <body
+        class="bg-white min-h-screen flex flex-col justify-center items-center"
+    >
+        <section class="px-8 py-12 rounded-2xl max-w-md w-full">
+            <div class="text-3xl font-bold mb-4 text-center">
+                <p>Login</p>
+            </div>
+            <div>
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label
+                            for="login-identifier-input"
+                            class="block text-sm font-medium text-gray-600"
+                        ></label>
+                        <input
+                            id="login-identifier-input"
+                            type="text"
+                            placeholder="Enter your username or email"
+                            class="mandy-input-field px-6 py-3 w-full"
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="login-password-input"
+                            class="block text-sm font-medium text-gray-600"
+                        ></label>
+                        <input
+                            id="login-password-input"
+                            type="password"
+                            placeholder="Enter your password"
+                            class="mandy-input-field px-6 py-3 w-full"
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <button
+                            id="login-button"
+                            class="mandy-button px-6 py-3 w-full"
+                        >
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
         </section>
-        <footer></footer>
     </body>
 </html>

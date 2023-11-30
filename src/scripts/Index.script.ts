@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import { PageUrlConstants } from '../utils/PageUrlConstants.util';
 import { refreshAuthToken } from '../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../utils/cookies/PageUrlConstants.util';
 
 $(async () => {
     await refreshAuthToken();

@@ -21,10 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import '../../css/styles.css';
 import { LoginRequestDto } from '../../dto/LoginRequest.dto';
 import { AuthRequest } from '../../requests/Auth.request';
+import { PageUrlConstants } from '../../utils/PageUrlConstants.util';
 import { authenticate } from '../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 const authRequest = new AuthRequest();
 
@@ -43,14 +44,11 @@ $(async () => {
         authRequest
             .login(registerUserDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
                 return authenticate(result.data.accessToken);
             })
             .then(() => {
                 window.location.replace(PageUrlConstants.HOME);
             })
-            .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
-            });
+            .catch(() => {});
     });
 });

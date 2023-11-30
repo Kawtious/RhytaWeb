@@ -21,11 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import '../../css/styles.css';
 import { CareerDto } from '../../dto/Career.dto';
 import { Career } from '../../entities/Career.entity';
 import { CareerRequest } from '../../requests/Career.request';
+import { hideElement, showElement } from '../../utils/ElementVisibility.util';
+import { setupHeader } from '../../utils/HeaderSetup.util';
 import { refreshAuthToken } from '../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 const careerRequest = new CareerRequest();
 
@@ -38,6 +40,14 @@ async function refreshCareersList() {
         // Store headers row before removing it
         const careersTableHeadersRow = $('#careers-table-headers-row');
 
+        const careerInsertSection = $('#career-insert-section');
+        const careerUpdateDeleteSection = $('#career-update-delete-section');
+
+        const careerUpdateNameInput = $('#career-update-name-input');
+        const careerUpdateDescriptionInput = $(
+            '#career-update-description-input'
+        );
+
         careersTable.html('');
 
         // What a funny hack haha!
@@ -45,20 +55,28 @@ async function refreshCareersList() {
 
         for (const career of result.data) {
             const careerRow = document.createElement('tr');
-            careerRow.style.cursor = 'pointer';
-            careerRow.onclick = async function () {
-                const careerUpdateNameInput = $('#career-update-name-input');
-                const careerUpdateDescriptionInput = $(
-                    '#career-update-description-input'
-                );
+            careerRow.classList.add('table-row');
 
+            careerRow.onclick = async function () {
                 if (selectedCareer == career) {
+                    careerRow.classList.remove('table-row-selected');
+
+                    showElement(careerInsertSection);
+                    hideElement(careerUpdateDeleteSection);
+
                     selectedCareer = null;
                     careerUpdateNameInput.val('');
                     careerUpdateDescriptionInput.val('');
 
                     return;
                 }
+
+                $('.table-row-selected').removeClass('table-row-selected');
+
+                careerRow.classList.add('table-row-selected');
+
+                showElement(careerUpdateDeleteSection);
+                hideElement(careerInsertSection);
 
                 selectedCareer = career;
                 careerUpdateNameInput.val(career.name);
@@ -100,15 +118,28 @@ $(async () => {
 
     await refreshCareersList();
 
-    $('#home-button').attr('href', PageUrlConstants.HOME);
+    await setupHeader();
 
-    $('#career-insert-button').on('click', async function (e) {
+    const careerInsertSection = $('#career-insert-section');
+    const careerUpdateDeleteSection = $('#career-update-delete-section');
+
+    const careerInsertButton = $('#career-insert-button');
+    const careerUpdateButton = $('#career-update-button');
+    const careerDeleteButton = $('#career-delete-button');
+
+    const careerInsertNameInput = $('#career-insert-name-input');
+    const careerInsertDescriptionInput = $('#career-insert-description-input');
+
+    const careerUpdateNameInput = $('#career-update-name-input');
+    const careerUpdateDescriptionInput = $('#career-update-description-input');
+
+    const responseMessage = $('#response-message');
+
+    careerInsertButton.on('click', async function (e) {
         e.preventDefault();
 
-        const name = $('#career-insert-name-input').val() as string;
-        const description = $(
-            '#career-insert-description-input'
-        ).val() as string;
+        const name = careerInsertNameInput.val() as string;
+        const description = careerInsertDescriptionInput.val() as string;
 
         const careerDto: CareerDto = {
             name: name,
@@ -118,19 +149,19 @@ $(async () => {
         careerRequest
             .insert(careerDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
 
-                $('#career-insert-name-input').val('');
-                $('#career-insert-description-input').val('');
+                careerInsertNameInput.val('');
+                careerInsertDescriptionInput.val('');
 
                 return refreshCareersList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#career-update-button').on('click', async function (e) {
+    careerUpdateButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedCareer) {
@@ -139,10 +170,8 @@ $(async () => {
 
         const id = selectedCareer.id;
         const version = selectedCareer.version;
-        const name = $('#career-update-name-input').val() as string;
-        const description = $(
-            '#career-update-description-input'
-        ).val() as string;
+        const name = careerUpdateNameInput.val() as string;
+        const description = careerUpdateDescriptionInput.val() as string;
 
         const careerDto: CareerDto = {
             version: version,
@@ -153,20 +182,23 @@ $(async () => {
         careerRequest
             .update(id, careerDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
+
+                showElement(careerInsertSection);
+                hideElement(careerUpdateDeleteSection);
 
                 selectedCareer = null;
-                $('#career-update-name-input').val('');
-                $('#career-update-description-input').val('');
+                careerUpdateNameInput.val('');
+                careerUpdateDescriptionInput.val('');
 
                 return refreshCareersList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#career-delete-button').on('click', async function (e) {
+    careerDeleteButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedCareer) {
@@ -178,16 +210,19 @@ $(async () => {
         careerRequest
             .delete(id)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
+
+                showElement(careerInsertSection);
+                hideElement(careerUpdateDeleteSection);
 
                 selectedCareer = null;
-                $('#career-update-name-input').val('');
-                $('#career-update-description-input').val('');
+                careerUpdateNameInput.val('');
+                careerUpdateDescriptionInput.val('');
 
                 return refreshCareersList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 });

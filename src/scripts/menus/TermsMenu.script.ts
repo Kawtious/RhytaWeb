@@ -21,41 +21,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+import '../../css/styles.css';
 import { TermDto } from '../../dto/Term.dto';
 import { Term } from '../../entities/Term.entity';
 import { TermRequest } from '../../requests/Term.request';
+import { hideElement, showElement } from '../../utils/ElementVisibility.util';
+import { setupHeader } from '../../utils/HeaderSetup.util';
 import { refreshAuthToken } from '../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 const termRequest = new TermRequest();
 
 let selectedTerm: Term | null;
 
 async function refreshTermsList() {
+    const termsTable = $('#terms-table');
+
+    // Store headers row before removing it
+    const termsTableHeadersRow = $('#terms-table-headers-row');
+
+    const termInsertSection = $('#term-insert-section');
+    const termUpdateDeleteSection = $('#term-update-delete-section');
+
+    const termInsertTitleInput = $('#term-insert-title-input');
+    const termInsertDescriptionInput = $('#term-insert-description-input');
+    const termInsertStartDateInput = $('#term-insert-start-date-input');
+    const termInsertEndDateInput = $('#term-insert-end-date-input');
+
+    const termUpdateTitleInput = $('#term-update-title-input');
+    const termUpdateDescriptionInput = $('#term-update-description-input');
+    const termUpdateStartDateInput = $('#term-update-start-date-input');
+    const termUpdateEndDateInput = $('#term-update-end-date-input');
+
     termRequest.getAll().then((result) => {
-        const termsTable = $('#terms-table');
-
-        // Store headers row before removing it
-        const termsTableHeadersRow = $('#terms-table-headers-row');
-
         termsTable.html('');
 
         termsTable.append(termsTableHeadersRow);
 
         for (const term of result.data) {
             const termRow = document.createElement('tr');
-            termRow.style.cursor = 'pointer';
-            termRow.onclick = async function () {
-                const termUpdateTitleInput = $('#term-update-title-input');
-                const termUpdateDescriptionInput = $(
-                    '#term-update-description-input'
-                );
-                const termUpdateStartDateInput = $(
-                    '#term-update-start-date-input'
-                );
-                const termUpdateEndDateInput = $('#term-update-end-date-input');
+            termRow.classList.add('table-row');
 
+            termRow.onclick = async function () {
                 if (selectedTerm == term) {
+                    termRow.classList.remove('table-row-selected');
+
+                    showElement(termInsertSection);
+                    hideElement(termUpdateDeleteSection);
+
                     selectedTerm = null;
                     termUpdateTitleInput.val('');
                     termUpdateDescriptionInput.val('');
@@ -64,6 +76,18 @@ async function refreshTermsList() {
 
                     return;
                 }
+
+                $('.table-row-selected').removeClass('table-row-selected');
+
+                termRow.classList.add('table-row-selected');
+
+                showElement(termUpdateDeleteSection);
+                hideElement(termInsertSection);
+
+                termInsertTitleInput.val('');
+                termInsertDescriptionInput.val('');
+                termInsertStartDateInput.val('');
+                termInsertEndDateInput.val('');
 
                 selectedTerm = term;
                 termUpdateTitleInput.val(term.title);
@@ -119,15 +143,34 @@ $(async () => {
 
     await refreshTermsList();
 
-    $('#home-button').attr('href', PageUrlConstants.HOME);
+    await setupHeader();
 
-    $('#term-insert-button').on('click', async function (e) {
+    const termInsertSection = $('#term-insert-section');
+    const termUpdateDeleteSection = $('#term-update-delete-section');
+
+    const termInsertButton = $('#term-insert-button');
+    const termUpdateButton = $('#term-update-button');
+    const termDeleteButton = $('#term-delete-button');
+
+    const termInsertTitleInput = $('#term-insert-title-input');
+    const termInsertDescriptionInput = $('#term-insert-description-input');
+    const termInsertStartDateInput = $('#term-insert-start-date-input');
+    const termInsertEndDateInput = $('#term-insert-end-date-input');
+
+    const termUpdateTitleInput = $('#term-update-title-input');
+    const termUpdateDescriptionInput = $('#term-update-description-input');
+    const termUpdateStartDateInput = $('#term-update-start-date-input');
+    const termUpdateEndDateInput = $('#term-update-end-date-input');
+
+    const responseMessage = $('#response-message');
+
+    termInsertButton.on('click', async function (e) {
         e.preventDefault();
 
-        const title = $('#term-insert-title-input').val() as string;
-        const description = $('#term-insert-description-input').val() as string;
-        const startDate = $('#term-insert-start-date-input').val() as string;
-        const endDate = $('#term-insert-end-date-input').val() as string;
+        const title = termInsertTitleInput.val() as string;
+        const description = termInsertDescriptionInput.val() as string;
+        const startDate = termInsertStartDateInput.val() as string;
+        const endDate = termInsertEndDateInput.val() as string;
 
         const termDto: TermDto = {
             title: title,
@@ -139,21 +182,21 @@ $(async () => {
         termRequest
             .insert(termDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
 
-                $('#term-insert-title-input').val('');
-                $('#term-insert-description-input').val('');
-                $('#term-insert-start-date-input').val('');
-                $('#term-insert-end-date-input').val('');
+                termInsertTitleInput.val('');
+                termInsertDescriptionInput.val('');
+                termInsertStartDateInput.val('');
+                termInsertEndDateInput.val('');
 
                 return refreshTermsList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#term-update-button').on('click', async function (e) {
+    termUpdateButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedTerm) {
@@ -162,10 +205,10 @@ $(async () => {
 
         const id = selectedTerm.id;
         const version = selectedTerm.version;
-        const title = $('#term-update-title-input').val() as string;
-        const description = $('#term-update-description-input').val() as string;
-        const startDate = $('#term-update-start-date-input').val() as string;
-        const endDate = $('#term-update-end-date-input').val() as string;
+        const title = termUpdateTitleInput.val() as string;
+        const description = termUpdateDescriptionInput.val() as string;
+        const startDate = termUpdateStartDateInput.val() as string;
+        const endDate = termUpdateEndDateInput.val() as string;
 
         const termDto: TermDto = {
             version: version,
@@ -178,22 +221,25 @@ $(async () => {
         termRequest
             .update(id, termDto)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
+
+                showElement(termInsertSection);
+                hideElement(termUpdateDeleteSection);
 
                 selectedTerm = null;
-                $('#term-update-title-input').val('');
-                $('#term-update-description-input').val('');
-                $('#term-update-start-date-input').val('');
-                $('#term-update-end-date-input').val('');
+                termUpdateTitleInput.val('');
+                termUpdateDescriptionInput.val('');
+                termUpdateStartDateInput.val('');
+                termUpdateEndDateInput.val('');
 
                 return refreshTermsList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 
-    $('#term-delete-button').on('click', async function (e) {
+    termDeleteButton.on('click', async function (e) {
         e.preventDefault();
 
         if (!selectedTerm) {
@@ -205,18 +251,21 @@ $(async () => {
         termRequest
             .delete(id)
             .then((result) => {
-                $('#response-message').text(JSON.stringify(result.data));
+                responseMessage.text(JSON.stringify(result.data));
+
+                showElement(termInsertSection);
+                hideElement(termUpdateDeleteSection);
 
                 selectedTerm = null;
-                $('#term-update-title-input').val('');
-                $('#term-update-description-input').val('');
-                $('#term-update-start-date-input').val('');
-                $('#term-update-end-date-input').val('');
+                termUpdateTitleInput.val('');
+                termUpdateDescriptionInput.val('');
+                termUpdateStartDateInput.val('');
+                termUpdateEndDateInput.val('');
 
                 return refreshTermsList();
             })
             .catch((error) => {
-                $('#response-message').text(JSON.stringify(error.response));
+                responseMessage.text(JSON.stringify(error.response));
             });
     });
 });

@@ -21,32 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-import $ from 'jquery';
-import Cookies from 'js-cookie';
+import { PageUrlConstants } from './PageUrlConstants.util';
 
-import { PageUrlConstants } from '../../utils/PageUrlConstants.util';
-import {
-    authenticate,
-    refreshAuthToken
-} from '../../utils/cookies/JwtAuth.util';
+export async function setupHeader() {
+    $('#home-button').on('click', async function () {
+        window.location.href = PageUrlConstants.HOME;
+    });
 
-$(async () => {
-    await refreshAuthToken();
+    $(document).on('click', async function (e) {
+        const profileMenu = $('#profile-menu');
+        const profileDropdown = $('#profile-dropdown');
 
-    const token = Cookies.get('jwt-auth-token');
+        const isClickInsideProfileMenu = Boolean(
+            $(e.target).closest(profileMenu).length
+        );
+        if (!isClickInsideProfileMenu) {
+            profileDropdown.addClass('hidden');
+        }
+    });
 
-    if (!token) {
-        window.location.replace(PageUrlConstants.LOGIN);
-        return;
-    }
+    $('#profile-button').on('click', async function () {
+        const profileDropdown = $('#profile-dropdown');
+        profileDropdown.toggleClass('hidden');
+    });
 
-    authenticate(token)
-        .then((result) => {
-            if (!result) {
-                window.location.replace(PageUrlConstants.LOGIN);
-            }
-        })
-        .catch(() => {
-            window.location.replace(PageUrlConstants.LOGIN);
-        });
-});
+    $('#profile-logout').attr('href', PageUrlConstants.LOGOUT);
+}

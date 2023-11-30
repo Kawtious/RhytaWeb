@@ -23,10 +23,10 @@
  */
 import $ from 'jquery';
 
+import { PageUrlConstants } from '../../utils/PageUrlConstants.util';
 import { resetTokenCookie } from '../../utils/cookies/JwtAuth.util';
-import { PageUrlConstants } from '../../utils/cookies/PageUrlConstants.util';
 
 $(async () => {
     await resetTokenCookie();
-    window.location.replace(PageUrlConstants.LOGIN_USER);
+    window.location.replace(PageUrlConstants.LOGIN);
 });
